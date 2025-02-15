@@ -7,6 +7,7 @@
     <v:String x:Key="items.new">New</v:String>
     <v:String x:Key="items.close">Close</v:String>
     <v:String x:Key="rich.color">Colors</v:String>
+    <v:String x:Key="rich.table">Size of table:</v:String>
     <v:String x:Key="settings.theme">Theme</v:String>
     <v:String x:Key="settings.theme.light">Light</v:String>
     <v:String x:Key="settings.theme.dark">Dark</v:String>

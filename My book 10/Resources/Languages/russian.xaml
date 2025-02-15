@@ -7,6 +7,7 @@
     <v:String x:Key="items.new">Новый</v:String>
     <v:String x:Key="items.close">Закрыть</v:String>
     <v:String x:Key="rich.color">Цвета</v:String>
+    <v:String x:Key="rich.table">Размер таблицы:</v:String>
     <v:String x:Key="settings.theme">Тема</v:String>
     <v:String x:Key="settings.theme.light">Светлая</v:String>
     <v:String x:Key="settings.theme.dark">Тёмная</v:String>

@@ -397,8 +397,8 @@ namespace My_book_10
 		public void ChangeSetting(Uri setting)
 		{
 			ResourceDictionary Setting = new ResourceDictionary() { Source = setting }; ;
-			this.Resources.Remove(Setting);
-			this.Resources.MergedDictionaries.
+			Resources.Remove(Setting);
+			Resources.MergedDictionaries.
 			Add(Setting);
 		}
 
@@ -662,14 +662,45 @@ namespace My_book_10
 			}
 		}
 
-        private void InsertTable_Click(object sender, RoutedEventArgs e)
+        private void InsertTable_menu(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void RemoveTable_Click(object sender, RoutedEventArgs e)
+        private void InsertTable_apply(object sender, RoutedEventArgs e)
         {
+            int rows = RowsNDD.Value;      // Количество строк
+            int columns = ColumnsNDD.Value; // Количество столбцов
 
+            // Создаём таблицу
+            Table table = new Table();
+
+            // Устанавливаем количество столбцов
+            for (int i = 0; i < columns; i++)
+            {
+                table.Columns.Add(new TableColumn());
+            }
+
+            // Добавляем строки
+            for (int i = 0; i < rows; i++)
+            {
+                TableRow row = new TableRow();
+
+                for (int j = 0; j < columns; j++)
+                {
+                    TableCell cell = new TableCell(new Paragraph(new Run(" "))); // Пустая ячейка
+                    cell.BorderBrush = Brushes.Black; // Границы ячеек
+                    cell.BorderThickness = new Thickness(1);
+                    row.Cells.Add(cell);
+                }
+
+                TableRowGroup rowGroup = table.RowGroups.Count > 0 ? table.RowGroups[0] : new TableRowGroup();
+                rowGroup.Rows.Add(row);
+                if (table.RowGroups.Count == 0) table.RowGroups.Add(rowGroup);
+            }
+
+            // Вставляем таблицу в RichTextBox
+            rtbEditor.Document.Blocks.Add(table);
         }
     }
 }

@@ -15,10 +15,6 @@
         Title="MainWindow" Height="450" Width="800" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Themes/light.xaml"/>
-                <ResourceDictionary Source="Resources/Languages/english.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
             <Style TargetType="ToggleButton">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -147,10 +143,10 @@
                                 <Button Width="40" x:Name="NewList" Visibility="Collapsed" Margin="5" Style="{DynamicResource ColorButton}" Click="RemoveImage_Click">
                                     <Image Source="{DynamicResource Image.Remove}" Margin="7"/>
                                 </Button>
-                                <Button Width="40" x:Name="InsertTable" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertTable_Click">
+                                <Button Width="40" x:Name="InsertTable" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertTable_menu">
                                     <Image Source="{DynamicResource Table.Insert}" Margin="7"/>
                                 </Button>
-                                <Button Width="40" x:Name="RemoveTable" Margin="5" Style="{DynamicResource ColorButton}" Click="RemoveTable_Clicks">
+                                <Button Width="40" x:Name="RemoveTable" Margin="5" Style="{DynamicResource ColorButton}">
                                     <Image Source="{DynamicResource Table.Remove}" Margin="7"/>
                                 </Button>
                             </StackPanel>
@@ -195,7 +191,15 @@
                             </StackPanel>
                         </Border>
                         <Border x:Name="Table" CornerRadius="15" Visibility="Visible" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1">
-                            <StackPanel></StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="10">
+                                    <TextBlock Text="{DynamicResource rich.table}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <local:NumericDropDown x:Name="RowsNDD"/>
+                                    <TextBlock Text="x" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                    <local:NumericDropDown x:Name="ColumnsNDD"/>
+                                </StackPanel>
+                                <Button Margin="5" Content="Apply" Click="InsertTable_apply"/>
+                            </StackPanel>
                         </Border>
                         <Border x:Name="Colors" Visibility="Hidden" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >
                             <StackPanel Orientation="Vertical">
