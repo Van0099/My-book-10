@@ -664,7 +664,7 @@ namespace My_book_10
 
         private void InsertTable_menu(object sender, RoutedEventArgs e)
         {
-
+			Table.Visibility = Visibility.Visible;
         }
 
         private void InsertTable_apply(object sender, RoutedEventArgs e)
@@ -701,6 +701,30 @@ namespace My_book_10
 
             // Вставляем таблицу в RichTextBox
             rtbEditor.Document.Blocks.Add(table);
+			Table.Visibility = Visibility.Hidden;
+        }
+
+        private void CopyText_Click(object sender, RoutedEventArgs e)
+        {
+            if (rtbEditor.Selection.Text.Length > 0) // Проверяем, что есть выделенный текст
+            {
+                Clipboard.SetText(rtbEditor.Selection.Text);
+            }
+        }
+
+        // Вставить текст из буфера обмена
+        private void PasteText_Click(object sender, RoutedEventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                rtbEditor.Selection.Text = Clipboard.GetText();
+            }
+        }
+
+        // Выделить весь текст
+        private void SelectAllText_Click(object sender, RoutedEventArgs e)
+        {
+            rtbEditor.SelectAll();
         }
     }
 }

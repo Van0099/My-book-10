@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:My_book_10"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        FontFamily="Comfortaa"
+        FontFamily="{StaticResource Comfortaa}"
         Foreground="{DynamicResource ForeGround}"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
@@ -107,7 +107,22 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
-                            <RichTextBox x:Name="rtbEditor"/>
+                            <RichTextBox x:Name="rtbEditor">
+                                <RichTextBox.ContextMenu>
+                                    <ContextMenu x:Name="TableContextMenu">
+                                        <MenuItem Header="{DynamicResource rich.cm.copy}" Click="CopyText_Click"/>
+                                        <MenuItem Header="{DynamicResource rich.cm.paste}" Click="PasteText_Click"/>
+                                        <MenuItem Header="{DynamicResource rich.cm.selectall}" Click="SelectAllText_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Удалить строку" />
+                                        <Separator/>
+                                        <MenuItem Header="Добавить столбец"/>
+                                        <MenuItem Header="Удалить столбец"/>
+                                        <Separator/>
+                                        <MenuItem Header="Изменить стиль таблицы"/>
+                                    </ContextMenu>
+                                </RichTextBox.ContextMenu>
+                            </RichTextBox>
                         </Border>
                         <Grid Grid.Row="0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15,0,15,0">
@@ -190,15 +205,17 @@
                                 </Border>
                             </StackPanel>
                         </Border>
-                        <Border x:Name="Table" CornerRadius="15" Visibility="Visible" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1">
+                        <Border x:Name="Table" CornerRadius="15" Visibility="Hidden" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Grid.Row="1">
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal" Margin="10">
+                                <StackPanel Orientation="Horizontal" Margin="10,10,10,3">
                                     <TextBlock Text="{DynamicResource rich.table}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                     <local:NumericDropDown x:Name="RowsNDD"/>
                                     <TextBlock Text="x" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <local:NumericDropDown x:Name="ColumnsNDD"/>
                                 </StackPanel>
-                                <Button Margin="5" Content="Apply" Click="InsertTable_apply"/>
+                                <Button Margin="5,0,5,5" Style="{StaticResource CornerButton}" Height="20" Click="InsertTable_apply">
+                                    <TextBlock Text="{DynamicResource rich.table.apply}"/>
+                                </Button>
                             </StackPanel>
                         </Border>
                         <Border x:Name="Colors" Visibility="Hidden" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >

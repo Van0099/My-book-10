@@ -8,6 +8,10 @@
     <v:String x:Key="items.close">Close</v:String>
     <v:String x:Key="rich.color">Colors</v:String>
     <v:String x:Key="rich.table">Size of table:</v:String>
+    <v:String x:Key="rich.table.apply">Apply</v:String>
+    <v:String x:Key="rich.cm.copy">Copy</v:String>
+    <v:String x:Key="rich.cm.paste">Paste</v:String>
+    <v:String x:Key="rich.cm.selectall">Select all</v:String>
     <v:String x:Key="settings.theme">Theme</v:String>
     <v:String x:Key="settings.theme.light">Light</v:String>
     <v:String x:Key="settings.theme.dark">Dark</v:String>

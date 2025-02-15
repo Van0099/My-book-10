@@ -40,6 +40,24 @@
         </Setter>
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
+
+    <Style x:Key="CornerButton" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource ForeGround}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+            BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}" 
+            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
     <BitmapImage x:Key="Align.Left" UriSource="/Resources/icons/alignleft.png" />
     <BitmapImage x:Key="Align.Center" UriSource="/Resources/icons/aligncenter.png" />
     <BitmapImage x:Key="Align.Right" UriSource="/Resources/icons/alignright.png" />

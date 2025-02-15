@@ -145,7 +145,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resources\Font\Comfortaa-VariableFont_wght.ttf" />
+    <Resource Include="Resources\Font\comfortaa.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
