@@ -90,7 +90,7 @@
                         <Button x:Name="CloseDocument" Width="60" Style="{StaticResource ButtonFlat}" Margin="5" Height="20" Foreground="{DynamicResource ForeGround}" Click="CloseDocument_Click">
                             <TextBlock FontSize="11" TextAlignment="Center" Text="{DynamicResource items.close}"/>
                         </Button>
-                        <Button x:Name="View" Width="60" Style="{StaticResource ButtonFlat}" Margin="5" Height="20" Foreground="{DynamicResource ForeGround}" Click="CloseDocument_Click">
+                        <Button x:Name="View" Width="60" Style="{StaticResource ButtonFlat}" Margin="5" Height="20" Foreground="{DynamicResource ForeGround}" Click="View_Click">
                             <TextBlock FontSize="11" TextAlignment="Center" Text="View"/>
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -108,20 +108,6 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
                             <RichTextBox x:Name="rtbEditor">
-                                <RichTextBox.ContextMenu>
-                                    <ContextMenu x:Name="TableContextMenu">
-                                        <MenuItem Header="{DynamicResource rich.cm.copy}" Click="CopyText_Click"/>
-                                        <MenuItem Header="{DynamicResource rich.cm.paste}" Click="PasteText_Click"/>
-                                        <MenuItem Header="{DynamicResource rich.cm.selectall}" Click="SelectAllText_Click"/>
-                                        <Separator/>
-                                        <MenuItem Header="Удалить строку" />
-                                        <Separator/>
-                                        <MenuItem Header="Добавить столбец"/>
-                                        <MenuItem Header="Удалить столбец"/>
-                                        <Separator/>
-                                        <MenuItem Header="Изменить стиль таблицы"/>
-                                    </ContextMenu>
-                                </RichTextBox.ContextMenu>
                             </RichTextBox>
                         </Border>
                         <Grid Grid.Row="0">
@@ -292,6 +278,9 @@
                     </Grid>
                 </Border>
                 <Border x:Name="Menu" Visibility="Hidden" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#FF929292"/>
+                    </Border.Effect>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

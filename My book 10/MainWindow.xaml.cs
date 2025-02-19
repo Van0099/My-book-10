@@ -77,6 +77,32 @@ namespace My_book_10
 				{
 					rtbEditor.SpellCheck.IsEnabled = false;
 				}
+				{ // настройка ui элементов настроек
+                    if (settings.Theme == "light")
+                    {
+						Light.IsChecked = true;
+                    }
+                    else if (settings.Theme == "dark")
+                    {
+                        Dark.IsChecked = true;
+                    }
+                    if (settings.Language == "ru")
+                    {
+						Language.Text = "Русский";
+                    }
+                    else if (settings.Language == "en")
+                    {
+                        Language.Text = "English";
+                    }
+					if (settings.Spellcheck == true)
+					{
+						SpellCheck.IsChecked = true;
+					}
+					else if (settings.Spellcheck == false)
+                    {
+                        SpellCheck.IsChecked = false;
+                    }
+                }
 				UpdateRecentFilesList();
 			}
 		}
@@ -565,7 +591,7 @@ namespace My_book_10
 			rtbEditor.SpellCheck.IsEnabled = true;
 			spellcheck = true;
 			SettingsSave();
-        }
+		}
 
 		private void SpellCheck_Unchecked(object sender, RoutedEventArgs e)
 		{
@@ -662,69 +688,74 @@ namespace My_book_10
 			}
 		}
 
-        private void InsertTable_menu(object sender, RoutedEventArgs e)
-        {
+		private void InsertTable_menu(object sender, RoutedEventArgs e)
+		{
 			Table.Visibility = Visibility.Visible;
-        }
+		}
 
-        private void InsertTable_apply(object sender, RoutedEventArgs e)
-        {
-            int rows = RowsNDD.Value;      // Количество строк
-            int columns = ColumnsNDD.Value; // Количество столбцов
+		private void InsertTable_apply(object sender, RoutedEventArgs e)
+		{
+			int rows = RowsNDD.Value;      // Количество строк
+			int columns = ColumnsNDD.Value; // Количество столбцов
 
-            // Создаём таблицу
-            Table table = new Table();
+			// Создаём таблицу
+			Table table = new Table();
 
-            // Устанавливаем количество столбцов
-            for (int i = 0; i < columns; i++)
-            {
-                table.Columns.Add(new TableColumn());
-            }
+			// Устанавливаем количество столбцов
+			for (int i = 0; i < columns; i++)
+			{
+				table.Columns.Add(new TableColumn());
+			}
 
-            // Добавляем строки
-            for (int i = 0; i < rows; i++)
-            {
-                TableRow row = new TableRow();
+			// Добавляем строки
+			for (int i = 0; i < rows; i++)
+			{
+				TableRow row = new TableRow();
 
-                for (int j = 0; j < columns; j++)
-                {
-                    TableCell cell = new TableCell(new Paragraph(new Run(" "))); // Пустая ячейка
-                    cell.BorderBrush = Brushes.Black; // Границы ячеек
-                    cell.BorderThickness = new Thickness(1);
-                    row.Cells.Add(cell);
-                }
+				for (int j = 0; j < columns; j++)
+				{
+					TableCell cell = new TableCell(new Paragraph(new Run(" "))); // Пустая ячейка
+					cell.BorderBrush = Brushes.Black; // Границы ячеек
+					cell.BorderThickness = new Thickness(1);
+					row.Cells.Add(cell);
+				}
 
-                TableRowGroup rowGroup = table.RowGroups.Count > 0 ? table.RowGroups[0] : new TableRowGroup();
-                rowGroup.Rows.Add(row);
-                if (table.RowGroups.Count == 0) table.RowGroups.Add(rowGroup);
-            }
+				TableRowGroup rowGroup = table.RowGroups.Count > 0 ? table.RowGroups[0] : new TableRowGroup();
+				rowGroup.Rows.Add(row);
+				if (table.RowGroups.Count == 0) table.RowGroups.Add(rowGroup);
+			}
 
-            // Вставляем таблицу в RichTextBox
-            rtbEditor.Document.Blocks.Add(table);
+			// Вставляем таблицу в RichTextBox
+			rtbEditor.Document.Blocks.Add(table);
 			Table.Visibility = Visibility.Hidden;
-        }
+		}
 
-        private void CopyText_Click(object sender, RoutedEventArgs e)
-        {
-            if (rtbEditor.Selection.Text.Length > 0) // Проверяем, что есть выделенный текст
-            {
-                Clipboard.SetText(rtbEditor.Selection.Text);
-            }
-        }
+		private void CopyText_Click(object sender, RoutedEventArgs e)
+		{
+			if (rtbEditor.Selection.Text.Length > 0) // Проверяем, что есть выделенный текст
+			{
+				Clipboard.SetText(rtbEditor.Selection.Text);
+			}
+		}
 
-        // Вставить текст из буфера обмена
-        private void PasteText_Click(object sender, RoutedEventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                rtbEditor.Selection.Text = Clipboard.GetText();
-            }
-        }
+		// Вставить текст из буфера обмена
+		private void PasteText_Click(object sender, RoutedEventArgs e)
+		{
+			if (Clipboard.ContainsText())
+			{
+				rtbEditor.Selection.Text = Clipboard.GetText();
+			}
+		}
 
-        // Выделить весь текст
-        private void SelectAllText_Click(object sender, RoutedEventArgs e)
+		// Выделить весь текст
+		private void SelectAllText_Click(object sender, RoutedEventArgs e)
+		{
+			rtbEditor.SelectAll();
+		}
+
+        private void View_Click(object sender, RoutedEventArgs e)
         {
-            rtbEditor.SelectAll();
+			View.ContextMenu.IsOpen = true;
         }
     }
 }
