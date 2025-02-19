@@ -69,6 +69,6 @@ namespace My_book_10
 
 			// Создаём файл настроек с дефолтными значениями, если его ещё нет
 			CreateDefaultSettingsFile();
-		}
-	}
+        }
+    }
 }

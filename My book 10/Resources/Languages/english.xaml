@@ -15,6 +15,7 @@
     <v:String x:Key="settings.theme">Theme</v:String>
     <v:String x:Key="settings.theme.light">Light</v:String>
     <v:String x:Key="settings.theme.dark">Dark</v:String>
+    <v:String x:Key="settings.theme.system">System</v:String>
     <v:String x:Key="settings.language">Language</v:String>
     <v:String x:Key="settings.spellcheck">SpellCheck</v:String>
     <v:String x:Key="settings.spellchekc.enable">Enable SpellCheck</v:String>

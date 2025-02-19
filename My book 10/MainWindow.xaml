@@ -12,7 +12,7 @@
         KeyDown="Window_KeyDown"
         ResizeMode="CanResize"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="MainWindow" Height="450" Width="800" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        Title="MainWindow" Height="450" Width="800" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="MainWindow_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="ToggleButton">
@@ -107,14 +107,18 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
-                            <RichTextBox x:Name="rtbEditor">
+                            <RichTextBox x:Name="rtbEditor" ContextMenuOpening="rtbEditor_ContextMenuOpening">
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Удалить таблицу" Click="RemoveTable"/>
-                                        <MenuItem Header="Добавить столбец в таблицу" Click="AddCollumnTable"/>
-                                        <MenuItem Header="Удалить столбец из таблицы" Click="RemoveCollumnTable"/>
-                                        <MenuItem Header="Добавить строку в таблицу" Click="AddRowToTable"/>
-                                        <MenuItem Header="Удалить строку из таблицы" Click="RemoveRowFromTable"/>
+                                        <MenuItem Header="Копировать" Click="CopyText_Click"/>
+                                        <MenuItem Header="Вставить" Click="PasteText_Click"/>
+                                        <MenuItem Header="Выделить всё" Click="SelectAllText_Click"/>
+                                        <Separator Style="{StaticResource MaterialDesignSeparator}"/>
+                                        <MenuItem x:Name="cRemoveTable" Header="Удалить таблицу" Click="RemoveTable"/>
+                                        <MenuItem x:Name="cAddCollumnTable" Header="Добавить столбец в таблицу" Click="AddCollumnTable"/>
+                                        <MenuItem x:Name="cRemoveCollumnTable"  Header="Удалить столбец из таблицы" Click="RemoveCollumnTable"/>
+                                        <MenuItem x:Name="cAddRowTable"  Header="Добавить строку в таблицу" Click="AddRowToTable"/>
+                                        <MenuItem x:Name="cRemoveRowTable" Header="Удалить строку из таблицы" Click="RemoveRowFromTable"/>
                                     </ContextMenu>
                                 </RichTextBox.ContextMenu>
                             </RichTextBox>

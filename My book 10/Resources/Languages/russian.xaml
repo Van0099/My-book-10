@@ -15,6 +15,7 @@
     <v:String x:Key="settings.theme">Тема</v:String>
     <v:String x:Key="settings.theme.light">Светлая</v:String>
     <v:String x:Key="settings.theme.dark">Тёмная</v:String>
+    <v:String x:Key="settings.theme.system">Системная</v:String>
     <v:String x:Key="settings.language">Язык</v:String>
     <v:String x:Key="settings.spellcheck">Орфография</v:String>
     <v:String x:Key="settings.spellchekc.enable">Проверка орфографии</v:String>

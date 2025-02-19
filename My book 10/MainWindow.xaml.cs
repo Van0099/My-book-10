@@ -104,10 +104,35 @@ namespace My_book_10
                     }
                 }
 				UpdateRecentFilesList();
-			}
+                SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+                this.Closed += (s, e) => SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
+            }
 		}
 
-		private void Close_Click(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateAppIcon();
+        }
+
+        private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            if (e.Category == UserPreferenceCategory.General) // Тема могла измениться
+            {
+                UpdateAppIcon();
+            }
+        }
+
+        private void UpdateAppIcon()
+        {
+            string iconPath = ThemeHelper.IsDarkTheme()
+                ? "pack://application:,,,/Resources/icon_dark.png"
+                : "pack://application:,,,/Resources/icon.png";
+
+            Uri iconUri = new Uri(iconPath, UriKind.RelativeOrAbsolute);
+            this.Icon = BitmapFrame.Create(iconUri);
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
 		}
@@ -963,7 +988,30 @@ namespace My_book_10
             }
         }
 
+        private void rtbEditor_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            // Проверяем, находится ли курсор в таблице
+            Table table = FindTableUnderSelection();
 
+            // Если курсор находится на таблице, показываем пункты меню для таблицы
+            if (table != null)
+            {
+                // Включаем пункты меню, связанные с таблицей
+                cRemoveTable.Visibility = Visibility.Visible;
+                cAddCollumnTable.Visibility = Visibility.Visible;
+                cRemoveCollumnTable.Visibility = Visibility.Visible;
+                cAddRowTable.Visibility = Visibility.Visible;
+                cRemoveRowTable.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cRemoveTable.Visibility = Visibility.Collapsed;
+                cAddCollumnTable.Visibility = Visibility.Collapsed;
+                cRemoveCollumnTable.Visibility = Visibility.Collapsed;
+                cAddRowTable.Visibility = Visibility.Collapsed;
+                cRemoveRowTable.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
 
