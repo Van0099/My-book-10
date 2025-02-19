@@ -690,47 +690,99 @@ namespace My_book_10
 
 		private void InsertTable_menu(object sender, RoutedEventArgs e)
 		{
-			Table.Visibility = Visibility.Visible;
-		}
+			if (Table.Visibility == Visibility.Visible)
+                Table.Visibility = Visibility.Hidden;
+			else
+                Table.Visibility = Visibility.Visible;
+        }
 
 		private void InsertTable_apply(object sender, RoutedEventArgs e)
 		{
-			int rows = RowsNDD.Value;      // Количество строк
-			int columns = ColumnsNDD.Value; // Количество столбцов
+			int rows = RowsNDD.Value;
+			int columns = ColumnsNDD.Value;
 
-			// Создаём таблицу
-			Table table = new Table();
+            Table table = new Table
+    {
+        CellSpacing = 0 // Убираем зазоры между ячейками
+    };
 
-			// Устанавливаем количество столбцов
-			for (int i = 0; i < columns; i++)
-			{
-				table.Columns.Add(new TableColumn());
-			}
+    TableRowGroup tableRowGroup = new TableRowGroup();
+    table.RowGroups.Add(tableRowGroup);
 
-			// Добавляем строки
-			for (int i = 0; i < rows; i++)
-			{
-				TableRow row = new TableRow();
+    for (int i = 0; i < rows; i++)
+    {
+        TableRow row = new TableRow();
 
-				for (int j = 0; j < columns; j++)
-				{
-					TableCell cell = new TableCell(new Paragraph(new Run(" "))); // Пустая ячейка
-					cell.BorderBrush = Brushes.Black; // Границы ячеек
-					cell.BorderThickness = new Thickness(1);
-					row.Cells.Add(cell);
-				}
+        for (int j = 0; j < columns; j++)
+        {
+            TableCell cell = new TableCell(new Paragraph(new Run(" ")))
+            {
+                BorderThickness = new Thickness(0.5),
+                BorderBrush = Brushes.Gray,
+                Padding = new Thickness(5),
+                TextAlignment = TextAlignment.Center
+            };
 
-				TableRowGroup rowGroup = table.RowGroups.Count > 0 ? table.RowGroups[0] : new TableRowGroup();
-				rowGroup.Rows.Add(row);
-				if (table.RowGroups.Count == 0) table.RowGroups.Add(rowGroup);
-			}
+            // Первая строка - заголовок
+            if (i == 0)
+            {
+                cell.Background = Brushes.LightGray;
+                cell.FontWeight = FontWeights.Bold;
+            }
 
-			// Вставляем таблицу в RichTextBox
-			rtbEditor.Document.Blocks.Add(table);
+            // Скругляем углы только у крайних ячеек
+            if ((i == 0 && j == 0) || // Верхний левый угол
+                (i == 0 && j == columns - 1) || // Верхний правый угол
+                (i == rows - 1 && j == 0) || // Нижний левый угол
+                (i == rows - 1 && j == columns - 1)) // Нижний правый угол
+            {
+                cell.BorderBrush = Brushes.Transparent; // Убираем стандартную рамку
+                cell.Background = Brushes.White; // Делаем фон ячейки белым
+            }
+
+            row.Cells.Add(cell);
+        }
+
+        tableRowGroup.Rows.Add(row);
+    }
+
+    rtbEditor.Selection.Text = ""; // Убираем выделенный текст
+    rtbEditor.CaretPosition.InsertTextInRun("\n");
+    rtbEditor.CaretPosition.Paragraph.SiblingBlocks.Add(table);
 			Table.Visibility = Visibility.Hidden;
-		}
+        }
 
-		private void CopyText_Click(object sender, RoutedEventArgs e)
+        private void RemoveTable(object sender, RoutedEventArgs e)
+        {
+            Table table = FindTableUnderSelection();
+            if (table == null) return;
+
+            // Получаем родительский блок таблицы (обычно это Paragraph или TableRowGroup)
+            TextPointer caretPos = rtbEditor.CaretPosition;
+            TableCell cell = caretPos.Paragraph?.Parent as TableCell;
+
+            if (cell != null)
+            {
+                // Находим таблицу в родительском блоке
+                TableRow row = cell.Parent as TableRow;
+                if (row != null)
+                {
+                    TableRowGroup rowGroup = row.Parent as TableRowGroup;
+                    if (rowGroup != null)
+                    {
+                        // Теперь удаляем таблицу, просто удалив родительский блок из документа
+                        var parentBlock = rowGroup.Parent as Block;
+                        if (parentBlock != null)
+                        {
+                            // Удаляем блок, содержащий таблицу
+                            rtbEditor.Document.Blocks.Remove(parentBlock);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CopyText_Click(object sender, RoutedEventArgs e)
 		{
 			if (rtbEditor.Selection.Text.Length > 0) // Проверяем, что есть выделенный текст
 			{
@@ -757,6 +809,161 @@ namespace My_book_10
         {
 			View.ContextMenu.IsOpen = true;
         }
+
+        private Table FindTableUnderSelection()
+        {
+            // Получаем позицию курсора
+            TextPointer caretPos = rtbEditor.CaretPosition;
+
+            // Получаем абзац, в котором находится курсор
+            Paragraph para = caretPos.Paragraph;
+            if (para == null)
+                return null;
+
+            // Проверяем, является ли родитель абзаца элементом TableCell
+            TableCell cell = para.Parent as TableCell;
+            if (cell == null)
+                return null;
+
+            // Получаем родительскую строку таблицы
+            TableRow row = cell.Parent as TableRow;
+            if (row == null)
+                return null;
+
+            // Получаем группу строк
+            TableRowGroup trg = row.Parent as TableRowGroup;
+            if (trg == null)
+                return null;
+
+            // Наконец, получаем таблицу
+            Table table = trg.Parent as Table;
+            return table;
+        }
+
+        private void AddCollumnTable(object sender, RoutedEventArgs e)
+        {
+            Table table = FindTableUnderSelection();
+            if (table == null) return;
+
+            TableRowGroup rowGroup = table.RowGroups.FirstOrDefault();
+            if (rowGroup == null || rowGroup.Rows.Count == 0) return;
+
+            // Берем первую строку для копирования стиля
+            TableRow firstRow = rowGroup.Rows.First();
+
+            // Создаем новую ячейку для каждого столбца
+            foreach (TableRow row in rowGroup.Rows)
+            {
+                // Берем стиль из первой ячейки строки
+                TableCell templateCell = firstRow.Cells.FirstOrDefault();
+
+                if (templateCell != null)
+                {
+                    TableCell newCell = new TableCell(new Paragraph(new Run(" ")))
+                    {
+                        BorderThickness = templateCell.BorderThickness,
+                        BorderBrush = templateCell.BorderBrush,
+                        Padding = templateCell.Padding,
+                        TextAlignment = templateCell.TextAlignment
+                    };
+
+                    newCell.Background = Brushes.White;
+
+                    // Добавляем новую ячейку в строку
+                    row.Cells.Add(newCell);
+                }
+            }
+        }
+
+        private void RemoveCollumnTable(object sender, RoutedEventArgs e)
+        {
+            Table table = FindTableUnderSelection();
+            if (table == null)
+            {
+                MessageBox.Show("Таблица не найдена!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            TextPointer caretPos = rtbEditor.CaretPosition;
+            Paragraph para = caretPos.Paragraph;
+            if (para == null)
+                return;
+
+            TableCell selectedCell = para.Parent as TableCell;
+            if (selectedCell == null)
+                return;
+
+            TableRow selectedRow = selectedCell.Parent as TableRow;
+            if (selectedRow == null)
+                return;
+
+            int columnIndex = selectedRow.Cells.IndexOf(selectedCell);
+            if (columnIndex == -1)
+                return;
+
+            // Удаляем ячейки в каждом ряду, относящиеся к этому столбцу
+            foreach (TableRow row in table.RowGroups[0].Rows)
+            {
+                if (columnIndex < row.Cells.Count)
+                {
+                    row.Cells.RemoveAt(columnIndex);
+                }
+            }
+        }
+        private void AddRowToTable(object sender, RoutedEventArgs e)
+        {
+            Table table = FindTableUnderSelection();
+            if (table == null) return;
+
+            TableRowGroup rowGroup = table.RowGroups.FirstOrDefault();
+            if (rowGroup == null || rowGroup.Rows.Count == 0) return;
+
+            // Берем первую строку для копирования стиля
+            TableRow firstRow = rowGroup.Rows.First();
+
+            // Создаем новую строку
+            TableRow newRow = new TableRow();
+
+            // Копируем стиль из первой строки
+            foreach (TableCell templateCell in firstRow.Cells)
+            {
+                TableCell newCell = new TableCell(new Paragraph(new Run(" ")))
+                {
+                    BorderThickness = templateCell.BorderThickness,
+                    BorderBrush = templateCell.BorderBrush,
+                    Padding = templateCell.Padding,
+                    TextAlignment = templateCell.TextAlignment
+                };
+
+                newCell.Background = Brushes.White;
+
+                newRow.Cells.Add(newCell);
+            }
+
+            // Добавляем строку в таблицу
+            rowGroup.Rows.Add(newRow);
+        }
+
+        private void RemoveRowFromTable(object sender, RoutedEventArgs e)
+        {
+            Table table = FindTableUnderSelection();
+            if (table == null) return;
+
+            TableRowGroup rowGroup = table.RowGroups.FirstOrDefault();
+            if (rowGroup == null || rowGroup.Rows.Count == 0) return;
+
+            // Определяем текущую строку
+            TextPointer caretPos = rtbEditor.CaretPosition;
+            TableCell cell = caretPos.Paragraph?.Parent as TableCell;
+            TableRow row = cell?.Parent as TableRow;
+
+            if (row != null)
+            {
+                rowGroup.Rows.Remove(row);
+            }
+        }
+
+
     }
 }
 

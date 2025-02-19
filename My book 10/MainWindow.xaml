@@ -108,6 +108,15 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
                             <RichTextBox x:Name="rtbEditor">
+                                <RichTextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Удалить таблицу" Click="RemoveTable"/>
+                                        <MenuItem Header="Добавить столбец в таблицу" Click="AddCollumnTable"/>
+                                        <MenuItem Header="Удалить столбец из таблицы" Click="RemoveCollumnTable"/>
+                                        <MenuItem Header="Добавить строку в таблицу" Click="AddRowToTable"/>
+                                        <MenuItem Header="Удалить строку из таблицы" Click="RemoveRowFromTable"/>
+                                    </ContextMenu>
+                                </RichTextBox.ContextMenu>
                             </RichTextBox>
                         </Border>
                         <Grid Grid.Row="0">
@@ -146,9 +155,6 @@
                                 </Button>
                                 <Button Width="40" x:Name="InsertTable" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertTable_menu">
                                     <Image Source="{DynamicResource Table.Insert}" Margin="7"/>
-                                </Button>
-                                <Button Width="40" x:Name="RemoveTable" Margin="5" Style="{DynamicResource ColorButton}">
-                                    <Image Source="{DynamicResource Table.Remove}" Margin="7"/>
                                 </Button>
                             </StackPanel>
                         </Grid>
