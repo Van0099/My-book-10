@@ -107,12 +107,24 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
-                            <RichTextBox x:Name="rtbEditor" ContextMenuOpening="rtbEditor_ContextMenuOpening">
+                            <RichTextBox x:Name="rtbEditor" ContextMenuOpening="rtbEditor_ContextMenuOpening" SelectionChanged="rtbEditor_SelectionChanged">
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Копировать" Click="CopyText_Click"/>
-                                        <MenuItem Header="Вставить" Click="PasteText_Click"/>
-                                        <MenuItem Header="Выделить всё" Click="SelectAllText_Click"/>
+                                        <MenuItem Header="Копировать" Click="CopyText_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="{DynamicResource Cm.Copy}" Width="16" Height="16"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Вставить" Click="PasteText_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="{DynamicResource Cm.Paste}" Width="16" Height="16"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Выделить всё" Click="SelectAllText_Click">
+                                            <MenuItem.Icon>
+                                                <Image Source="{DynamicResource Cm.SelectAll}" Width="16" Height="16"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                         <Separator Style="{StaticResource MaterialDesignSeparator}"/>
                                         <MenuItem x:Name="cRemoveTable" Header="Удалить таблицу" Click="RemoveTable"/>
                                         <MenuItem x:Name="cAddCollumnTable" Header="Добавить столбец в таблицу" Click="AddCollumnTable"/>
