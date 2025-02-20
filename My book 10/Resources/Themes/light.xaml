@@ -3,61 +3,6 @@
     <Style x:Key="Comfortaa">
         <Setter Property="TextElement.FontFamily" Value="Resources/Font/#Comfortaa" />
     </Style>
-    <Style x:Key="ButtonFlat" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource ForeGround}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" 
-                        BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" 
-                        CornerRadius="15">
-                        <ContentPresenter HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-    </Style>
-
-    <Style x:Key="ColorButton" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource OptionalBack2}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ForeGround}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" 
-                BorderBrush="{TemplateBinding BorderBrush}" 
-                BorderThickness="{TemplateBinding BorderThickness}" 
-                CornerRadius="9">
-                        <ContentPresenter HorizontalAlignment="Center" 
-                              VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-    </Style>
-
-    <Style x:Key="CornerButton" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="{DynamicResource ForeGround}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" 
-            BorderBrush="{TemplateBinding BorderBrush}" 
-            BorderThickness="{TemplateBinding BorderThickness}" 
-            CornerRadius="10">
-                        <ContentPresenter HorizontalAlignment="Center" 
-                          VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-    </Style>
     <BitmapImage x:Key="Align.Left" UriSource="/Resources/icons/alignleft.png" />
     <BitmapImage x:Key="Align.Center" UriSource="/Resources/icons/aligncenter.png" />
     <BitmapImage x:Key="Align.Right" UriSource="/Resources/icons/alignright.png" />
@@ -71,6 +16,8 @@
 
     <BitmapImage x:Key="Table.Insert" UriSource="/Resources/icons/inserttable_light.png" />
     <BitmapImage x:Key="Table.Remove" UriSource="/Resources/icons/removetable_light.png" />
+
+    <BitmapImage x:Key="List.Insert" UriSource="/Resources/icons/newlist.png" />
 
     <SolidColorBrush x:Key="BackGround" Color="White"/>
     <SolidColorBrush x:Key="BrandColor" Color="#8f4bf9"/>
