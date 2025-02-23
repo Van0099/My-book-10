@@ -32,39 +32,52 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
-                                <StackPanel Margin="10">
+                                <StackPanel Margin="10" Orientation="Vertical">
                                     <TextBlock Text="Фон" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <local:ColorPicker/>
+                                    <local:ColorBox x:Name="sBackGround"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="Основной цвет" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <TextBox x:Name="sBrandColor"/>
+                                    <local:ColorBox x:Name="sBrandColor"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="Дополнительный цвет" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <TextBox x:Name="sOptionalColor"/>
+                                    <local:ColorBox x:Name="sOptionalColor"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="Дополнительный фон" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <TextBox x:Name="sOptionalBack"/>
+                                    <local:ColorBox x:Name="sOptionalBack"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="Цвет текста" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <TextBox x:Name="sForeGround"/>
+                                    <local:ColorBox x:Name="sForeGround"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5,5,5,35">
                                 <StackPanel Margin="10">
                                     <TextBlock Text="Дополнительный фон 2" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
-                                    <TextBox x:Name="sOptionalBack2"/>
+                                    <local:ColorBox x:Name="sOptionalBack2"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5,5,5,35">
+                                <StackPanel Margin="10">
+                                    <TextBlock Text="Тип темы" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <RadioButton x:Name="Light" GroupName="ThemeType">
+                                            <TextBlock Text="{DynamicResource settings.theme.light}"/>
+                                        </RadioButton>
+                                        <RadioButton x:Name="Dark" GroupName="ThemeType">
+                                            <TextBlock Text="{DynamicResource settings.theme.dark}"/>
+                                        </RadioButton>
+                                    </StackPanel>
                                 </StackPanel>
                             </Border>
                         </StackPanel>

@@ -448,14 +448,13 @@ namespace My_book_10
 		public void ChangeSetting(Uri setting)
 		{
 			ResourceDictionary Setting = new ResourceDictionary() { Source = setting }; ;
-			Resources.Remove(Setting);
-			Resources.MergedDictionaries.
+            Application.Current.Resources.Remove(Setting);
+            Application.Current.Resources.MergedDictionaries.
 			Add(Setting);
 		}
 
 		private void Light_Checked(object sender, RoutedEventArgs e)
 		{
-			//File.WriteAllText("config/theme.txt", "Dark");
 			ChangeSetting(new Uri("Resources/Themes/light.xaml", UriKind.Relative));
 			theme = "light";
 			SettingsSave();
