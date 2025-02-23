@@ -1012,6 +1012,90 @@ namespace My_book_10
                 cRemoveRowTable.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void rtbEditor_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            TextRange selection = new TextRange(rtbEditor.Selection.Start, rtbEditor.Selection.End);
+            if (!selection.IsEmpty)
+            {
+                object fontSize = selection.GetPropertyValue(TextElement.FontSizeProperty);
+                if (fontSize != DependencyProperty.UnsetValue)
+                {
+                    cmbFontSize.Text = fontSize.ToString();
+                }
+            }
+        }
+
+        private void ToggleList(bool isNumbered)
+        {
+            TextSelection selection = rtbEditor.Selection;
+            if (!selection.IsEmpty)
+            {
+                // Проверяем, уже ли внутри списка
+                List currentList = selection.Start.Paragraph?.Parent as List;
+
+                if (currentList == null) // Если выделение не внутри списка — создаём новый список
+                {
+                    List newList = new List
+                    {
+                        MarkerStyle = isNumbered ? TextMarkerStyle.Decimal : TextMarkerStyle.Disc
+                    };
+
+                    ListItem listItem = new ListItem();
+
+                    // Перемещаем выделенный текст в список
+                    foreach (Block block in selection.Start.Paragraph?.SiblingBlocks)
+                    {
+                        if (block is Paragraph paragraph && selection.Contains(paragraph.ContentStart))
+                        {
+                            listItem.Blocks.Add(new Paragraph(new Run(new TextRange(paragraph.ContentStart, paragraph.ContentEnd).Text)));
+                        }
+                    }
+
+                    newList.ListItems.Add(listItem);
+                    rtbEditor.Document.Blocks.Add(newList);
+                }
+            }
+        }
+
+        private void RemoveList()
+        {
+            TextSelection selection = rtbEditor.Selection;
+            if (!selection.IsEmpty)
+            {
+                List currentList = selection.Start.Paragraph?.Parent as List;
+                if (currentList != null)
+                {
+                    List<Block> paragraphs = new List<Block>();
+
+                    foreach (ListItem item in currentList.ListItems)
+                    {
+                        foreach (Block block in item.Blocks)
+                        {
+                            if (block is Paragraph paragraph)
+                            {
+                                paragraphs.Add(new Paragraph(new Run(new TextRange(paragraph.ContentStart, paragraph.ContentEnd).Text)));
+                            }
+                        }
+                    }
+
+                    // Удаляем старый список
+                    rtbEditor.Document.Blocks.Remove(currentList);
+
+                    // Добавляем параграфы вместо списка
+                    foreach (Block paragraph in paragraphs)
+                    {
+                        rtbEditor.Document.Blocks.Add(paragraph);
+                    }
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ThemeEditor te = new ThemeEditor();
+            te.Show();
+        }
     }
 }
 

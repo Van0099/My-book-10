@@ -1,8 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="Comfortaa">
-        <Setter Property="TextElement.FontFamily" Value="Resources/Font/#Comfortaa" />
-    </Style>
     <BitmapImage x:Key="Align.Left" UriSource="/Resources/icons/alignleft_dark.png" />
     <BitmapImage x:Key="Align.Center" UriSource="/Resources/icons/aligncenter_dark.png" />
     <BitmapImage x:Key="Align.Right" UriSource="/Resources/icons/alignright_dark.png" />

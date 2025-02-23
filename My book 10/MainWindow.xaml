@@ -166,11 +166,11 @@
                                 <Button Width="40" x:Name="RemoveImage" Margin="5" Style="{DynamicResource ColorButton}" Click="RemoveImage_Click">
                                     <Image Source="{DynamicResource Image.Remove}" Margin="7"/>
                                 </Button>
-                                <Button Width="40" x:Name="NewList" Visibility="Collapsed" Margin="5" Style="{DynamicResource ColorButton}" Click="RemoveImage_Click">
-                                    <Image Source="{DynamicResource Image.Remove}" Margin="7"/>
-                                </Button>
                                 <Button Width="40" x:Name="InsertTable" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertTable_menu">
                                     <Image Source="{DynamicResource Table.Insert}" Margin="7"/>
+                                </Button>
+                                <Button Width="40" x:Name="InsertList" Margin="15,5,5,5" Style="{DynamicResource ColorButton}">
+                                    <Image Source="{DynamicResource List.Insert}" Margin="7"/>
                                 </Button>
                             </StackPanel>
                         </Grid>
@@ -226,7 +226,19 @@
                                 </Button>
                             </StackPanel>
                         </Border>
-                        <Border x:Name="Colors" Visibility="Hidden" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >
+                        <Border CornerRadius="15" Visibility="Visible" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Grid.Row="1">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <Button Style="{DynamicResource ColorButton}" Margin="5">
+                                        <TextBlock Text="Нумерованый список" Margin="5"/>
+                                    </Button>
+                                    <Button Style="{DynamicResource ColorButton}" Margin="5">
+                                        <TextBlock Text="Маркированый список" Margin="5"/>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="Colors" Visibility="Visible" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >
                             <StackPanel Orientation="Vertical">
                                 <Button x:Name="StandartColor" Click="StandartColor_Click" Width="20" Height="20" Style="{DynamicResource ColorButton}" Background="{DynamicResource ForeGround}" Margin="5">
                                 </Button>
@@ -340,6 +352,7 @@
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
+                                <Button Content="Открыть редактор тем" Click="Button_Click"/>
                             </StackPanel>
                         </Border>
                         <StackPanel Grid.Column="0" Orientation="Vertical">
