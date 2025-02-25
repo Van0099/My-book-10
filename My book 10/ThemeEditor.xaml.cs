@@ -32,28 +32,50 @@ namespace My_book_10
             this.Close();
         }
 
-        private void SaveTheme_Click(object sender, RoutedEventArgs e)
+        private void SaveTheme(bool isDarkMode)
         {
-            string userThemePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mybook", "CustomTheme.xaml");
+
+            string themeName = CustomThemeName.Text;
+            string themesDir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mybook", "CustomThemes");
+
+            // Создаём папку, если её нет
+            if (!Directory.Exists(themesDir))
+                Directory.CreateDirectory(themesDir);
+
+            string themePath = System.IO.Path.Combine(themesDir, $"{themeName}.xaml");
+
+            if (File.Exists(themePath))
+            {
+                MessageBoxResult result = MessageBox.Show($"Тема '{themeName}' уже существует. Перезаписать?",
+                                                          "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Сохранение отменено.", "Отмена", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+            }
+
+            string iconSuffix = isDarkMode ? "_dark" : "";
 
             string themeXaml = $@"
-                    <ResourceDictionary xmlns=""http:schemas.microsoft.com/winfx/2006/xaml/presentation""
-                    xmlns:x=""http:schemas.microsoft.com/winfx/2006/xaml"">
-                        <BitmapImage x:Key=""Align.Left"" UriSource=""/Resources/icons/alignleft.png"" />
-                        <BitmapImage x:Key=""Align.Center"" UriSource=""/Resources/icons/aligncenter.png"" />
-                        <BitmapImage x:Key=""Align.Right"" UriSource=""/Resources/icons/alignright.png"" />
+                    <ResourceDictionary xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
+                    xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
+                        <BitmapImage x:Key=""Align.Left"" UriSource=""pack://application:,,,/Resources/icons/alignleft{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Align.Center"" UriSource=""pack://application:,,,/Resources/icons/aligncenter{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Align.Right"" UriSource=""pack://application:,,,/Resources/icons/alignright{iconSuffix}.png"" />
     
-                        <BitmapImage x:Key=""Image.Add"" UriSource=""/Resources/icons/addimage.png"" />
-                        <BitmapImage x:Key=""Image.Remove"" UriSource=""/Resources/icons/removeimage.png"" />
+                        <BitmapImage x:Key=""Image.Add"" UriSource=""pack://application:,,,/Resources/icons/addimage{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Image.Remove"" UriSource=""pack://application:,,,/Resources/icons/removeimage{iconSuffix}.png"" />
 
-                        <BitmapImage x:Key=""Cm.Copy"" UriSource=""/Resources/icons/copy.png"" />
-                        <BitmapImage x:Key=""Cm.Paste"" UriSource=""/Resources/icons/paste.png"" />
-                        <BitmapImage x:Key=""Cm.SelectAll"" UriSource=""/Resources/icons/selectall.png"" />
+                        <BitmapImage x:Key=""Cm.Copy"" UriSource=""pack://application:,,,/Resources/icons/copy{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Cm.Paste"" UriSource=""pack://application:,,,/Resources/icons/paste{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Cm.SelectAll"" UriSource=""pack://application:,,,/Resources/icons/selectall{iconSuffix}.png"" />
 
-                        <BitmapImage x:Key=""Table.Insert"" UriSource=""/Resources/icons/inserttable_light.png"" />
-                        <BitmapImage x:Key=""Table.Remove"" UriSource=""/Resources/icons/removetable_light.png"" />
+                        <BitmapImage x:Key=""Table.Insert"" UriSource=""pack://application:,,,/Resources/icons/inserttable{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Table.Remove"" UriSource=""pack://application:,,,/Resources/icons/removetable{iconSuffix}.png"" />
 
-                        <BitmapImage x:Key=""List.Insert"" UriSource=""/Resources/icons/newlist.png"" />
+                        <BitmapImage x:Key=""List.Insert"" UriSource=""pack://application:,,,/Resources/icons/newlist{iconSuffix}.png"" />
 
                         <SolidColorBrush x:Key=""BackGround"" Color=""{sBackGround.HEXColor}""/>
                         <SolidColorBrush x:Key=""BrandColor"" Color=""{sBrandColor.HEXColor}""/>
@@ -63,8 +85,8 @@ namespace My_book_10
                         <SolidColorBrush x:Key=""OptionalBack2"" Color=""{sOptionalBack2.HEXColor}""/>
                     </ResourceDictionary>";
 
-            File.WriteAllText(userThemePath, themeXaml);
-            MessageBox.Show("Тема сохранена!", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+            File.WriteAllText(themePath, themeXaml);
+            MessageBox.Show($"Тема '{themeName}' сохранена!", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
 
@@ -77,6 +99,12 @@ namespace My_book_10
 
             //Например, выводим результат для проверки
             MessageBox.Show($"Выбранный цвет в HEX: {hexColor}");
+        }
+
+        private void SaveTheme_Click(object sender, RoutedEventArgs e)
+        {
+            bool isDarkMode = Dark.IsChecked == true;
+            SaveTheme(isDarkMode);
         }
     }
 }

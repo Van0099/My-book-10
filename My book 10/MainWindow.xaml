@@ -311,7 +311,7 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Border x:Name="Menu" Visibility="Hidden" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
+                <Border x:Name="Menu" Visibility="Visible" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#FF929292"/>
                     </Border.Effect>
@@ -332,6 +332,9 @@
                                             <RadioButton x:Name="Light" Margin="5" GroupName="Theme" Foreground="White" BorderBrush="#00060606" Background="{DynamicResource OptionalBack}" Checked="Light_Checked">
                                                 <TextBlock Text="{DynamicResource settings.theme.light}"/>
                                             </RadioButton>
+                                            <Button Style="{DynamicResource ButtonFlat}" Click="Button_Click_1" Margin="15,5,5,5">
+                                                <Image Source="{StaticResource ThemeManager}" Width="20"/>
+                                            </Button>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>

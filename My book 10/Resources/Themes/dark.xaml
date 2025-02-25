@@ -14,6 +14,8 @@
     <BitmapImage x:Key="Table.Insert" UriSource="/Resources/icons/inserttable_dark.png" />
     <BitmapImage x:Key="Table.Remove" UriSource="/Resources/icons/removetable_dark.png" />
 
+    <BitmapImage x:Key="ThemeManager" UriSource="/Resources/icons/themefolder_dark.png" />
+
     <BitmapImage x:Key="List.Insert" UriSource="/Resources/icons/newlist_dark.png" />
 
     <SolidColorBrush x:Key="BackGround" Color="#FF252525"/>

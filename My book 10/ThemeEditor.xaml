@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         ResizeMode="CanResize"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="MainWindow" Height="300" Width="300" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png">
+        Title="MainWindow" Height="300" Width="300" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" ShowInTaskbar="False">
     <Grid>
         <Border Background="{DynamicResource BackGround}" CornerRadius="15">
             <Grid>
@@ -78,6 +78,12 @@
                                             <TextBlock Text="{DynamicResource settings.theme.dark}"/>
                                         </RadioButton>
                                     </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5,5,5,35">
+                                <StackPanel Margin="10">
+                                    <TextBlock Text="Название файла" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBox x:Name="CustomThemeName"/>
                                 </StackPanel>
                             </Border>
                         </StackPanel>

@@ -11,8 +11,10 @@
     <BitmapImage x:Key="Cm.Paste" UriSource="/Resources/icons/paste.png" />
     <BitmapImage x:Key="Cm.SelectAll" UriSource="/Resources/icons/selectall.png" />
 
-    <BitmapImage x:Key="Table.Insert" UriSource="/Resources/icons/inserttable_light.png" />
-    <BitmapImage x:Key="Table.Remove" UriSource="/Resources/icons/removetable_light.png" />
+    <BitmapImage x:Key="Table.Insert" UriSource="/Resources/icons/inserttable.png" />
+    <BitmapImage x:Key="Table.Remove" UriSource="/Resources/icons/removetable.png" />
+
+    <BitmapImage x:Key="ThemeManager" UriSource="/Resources/icons/themefolder.png" />
 
     <BitmapImage x:Key="List.Insert" UriSource="/Resources/icons/newlist.png" />
 

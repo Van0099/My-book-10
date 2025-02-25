@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Markup;
 using System.IO;
+using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,17 +34,17 @@ namespace My_book_10
 			public string Theme { get; set; }
 			public string Language { get; set; }
 			public bool Spellcheck { get; set; }
-		}
+        }
 
 		private static readonly string settingsfile = System.IO.Path.Combine(
 			Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 			"mybook", "settings.json");
 
-		static string filename;
+        static string filename;
 
-		static string theme;
-		static string language;
-		static bool spellcheck;
+		public static string theme;
+		public static string language;
+		public static bool spellcheck;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -53,15 +55,73 @@ namespace My_book_10
 				string json = File.ReadAllText(settingsfile);
 
 				Settings settings = JsonConvert.DeserializeObject<Settings>(json);
-				if (settings.Theme == "light")
+				theme = settings.Theme;
+				language = settings.Language;
+				spellcheck = settings.Spellcheck;
+				if (theme == "light")
 				{
 					ChangeSetting(new Uri("Resources/Themes/light.xaml", UriKind.Relative));
 				}
-				else
+				else if (theme == "dark")
 				{
 					ChangeSetting(new Uri("Resources/Themes/dark.xaml", UriKind.Relative));
 				}
-				if (settings.Language == "ru")
+				//else
+				//{
+    //                var dictionaries = Application.Current.Resources.MergedDictionaries;
+
+    //                // Удаляем стандартные темы
+    //                string lightThemePath = "Resources/Themes/light.xaml";
+    //                string darkThemePath = "Resources/Themes/dark.xaml";
+
+    //                var toRemove = dictionaries.Where(d =>
+    //                    d.Source != null &&
+    //                    (d.Source.OriginalString == lightThemePath || d.Source.OriginalString == darkThemePath))
+    //                    .ToList();
+
+    //                foreach (var dict in toRemove)
+    //                {
+    //                    dictionaries.Remove(dict);
+    //                }
+
+    //                if (File.Exists(settings.Theme))
+    //                {
+    //                    try
+    //                    {
+    //                        Uri themeUri = new Uri(settings.Theme, UriKind.RelativeOrAbsolute);
+    //                        MessageBox.Show("Загружаемая тема: " + themeUri.ToString());
+
+    //                        ResourceDictionary Setting = new ResourceDictionary { Source = themeUri };
+    //                        Application.Current.Resources.MergedDictionaries.Add(Setting);
+    //                    }
+    //                    catch (Exception ex)
+    //                    {
+    //                        MessageBox.Show("Ошибка загрузки темы через Uri: " + ex.Message);
+
+    //                        try
+    //                        {
+    //                            // Попробуем загрузить вручную
+    //                            string xamlContent = File.ReadAllText(settings.Theme);
+    //                            using (StringReader stringReader = new StringReader(xamlContent))
+    //                            using (XmlReader xmlReader = XmlReader.Create(stringReader))
+    //                            {
+    //                                ResourceDictionary setting = (ResourceDictionary)XamlReader.Load(xmlReader);
+    //                                Application.Current.Resources.MergedDictionaries.Add(setting);
+    //                            }
+    //                        }
+    //                        catch (Exception ex2)
+    //                        {
+    //                            MessageBox.Show("Ошибка загрузки темы через XamlReader: " + ex2.Message);
+    //                        }
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    MessageBox.Show("Файл темы не найден, применяется стандартная светлая тема.");
+    //                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(lightThemePath, UriKind.Relative) });
+    //                }
+    //            }
+				if (language == "ru")
 				{
 					ChangeSetting(new Uri("Resources/Languages/russian.xaml", UriKind.Relative));
 				}
@@ -69,11 +129,11 @@ namespace My_book_10
 				{
 					ChangeSetting(new Uri("Resources/Languages/english.xaml", UriKind.Relative));
 				}
-				if (settings.Spellcheck == true)
+				if (spellcheck == true)
 				{
 					rtbEditor.SpellCheck.IsEnabled = true;
 				}
-				else if (settings.Spellcheck == false)
+				else if (spellcheck == false)
 				{
 					rtbEditor.SpellCheck.IsEnabled = false;
 				}
@@ -445,9 +505,24 @@ namespace My_book_10
 			SettingsSave();
 		}
 
-		public void ChangeSetting(Uri setting)
+        private void RemoveCustomTheme()
+        {
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+            string customThemePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mybook", "CustomThemes");
+
+            var toRemove = dictionaries.Where(d =>
+                d.Source != null && d.Source.OriginalString.StartsWith(customThemePath))
+                .ToList();
+
+            foreach (var dict in toRemove)
+            {
+                dictionaries.Remove(dict);
+            }
+        }
+        public void ChangeSetting(Uri setting)
 		{
-			ResourceDictionary Setting = new ResourceDictionary() { Source = setting }; ;
+            RemoveCustomTheme();
+            ResourceDictionary Setting = new ResourceDictionary() { Source = setting }; ;
             Application.Current.Resources.Remove(Setting);
             Application.Current.Resources.MergedDictionaries.
 			Add(Setting);
@@ -633,7 +708,7 @@ namespace My_book_10
 				Spellcheck = spellcheck
 			};
 
-			string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+			string json = JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
 
 			File.WriteAllText(settingsfile, json);
 		}
@@ -1092,8 +1167,12 @@ namespace My_book_10
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ThemeEditor te = new ThemeEditor();
-            te.Show();
+            WindowHelper.BringWindowToFront<ThemeEditor>();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.BringWindowToFront<ThemeManager>();
         }
     }
 }

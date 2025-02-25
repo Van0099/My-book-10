@@ -21,7 +21,8 @@ namespace My_book_10
 		public string Theme { get; set; }
 		public string Language { get; set; }
 		public bool Spellcheck { get; set; }
-	}
+        public bool IsCustomTheme { get; set; }
+    }
 
 	public partial class App : Application
 	{
@@ -49,7 +50,7 @@ namespace My_book_10
 			{
 				Settings settings = new Settings
 				{
-					Theme = "ligt",
+					Theme = "light",
 					Language = "ru",
 					Spellcheck = false
 				};
