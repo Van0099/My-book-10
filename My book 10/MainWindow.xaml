@@ -169,7 +169,7 @@
                                 <Button Width="40" x:Name="InsertTable" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertTable_menu">
                                     <Image Source="{DynamicResource Table.Insert}" Margin="7"/>
                                 </Button>
-                                <Button Width="40" x:Name="InsertList" Margin="15,5,5,5" Style="{DynamicResource ColorButton}">
+                                <Button Width="40" x:Name="InsertList" Margin="15,5,5,5" Style="{DynamicResource ColorButton}" Click="InsertList_Click">
                                     <Image Source="{DynamicResource List.Insert}" Margin="7"/>
                                 </Button>
                             </StackPanel>
@@ -226,19 +226,25 @@
                                 </Button>
                             </StackPanel>
                         </Border>
-                        <Border CornerRadius="15" Visibility="Visible" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Grid.Row="1">
+                        <Border x:Name="ListParameter" CornerRadius="15" Visibility="Hidden" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Grid.Row="1">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal" Margin="5">
-                                    <Button Style="{DynamicResource ColorButton}" Margin="5">
+                                    <Button Style="{DynamicResource ColorButton}" Margin="5" Click="CreateListParameter">
+                                        <Button.Tag>
+                                            <sys:Boolean>true</sys:Boolean>
+                                        </Button.Tag>
                                         <TextBlock Text="Нумерованый список" Margin="5"/>
                                     </Button>
-                                    <Button Style="{DynamicResource ColorButton}" Margin="5">
+                                    <Button Style="{DynamicResource ColorButton}" Margin="5" Click="CreateListParameter">
+                                        <Button.Tag>
+                                            <sys:Boolean>false</sys:Boolean>
+                                        </Button.Tag>
                                         <TextBlock Text="Маркированый список" Margin="5"/>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <Border x:Name="Colors" Visibility="Visible" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >
+                        <Border x:Name="Colors" Visibility="Hidden" CornerRadius="15" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" >
                             <StackPanel Orientation="Vertical">
                                 <Button x:Name="StandartColor" Click="StandartColor_Click" Width="20" Height="20" Style="{DynamicResource ColorButton}" Background="{DynamicResource ForeGround}" Margin="5">
                                 </Button>
@@ -355,27 +361,33 @@
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
-                                <Button Content="Открыть редактор тем" Click="Button_Click"/>
+                                <Button Click="Button_Click" Style="{StaticResource CornerButton}" Margin="5">
+                                    <TextBlock Text="Открыть редактор тем" Margin="5"/>
+                                </Button>
                             </StackPanel>
                         </Border>
                         <StackPanel Grid.Column="0" Orientation="Vertical">
                             <TextBlock Text="{DynamicResource title.welcome}" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,0"></TextBlock>
                             <StackPanel Orientation="Horizontal">
-                                <ListBox Name="recentFilesListBox"
-                                HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Width="250" Height="200" Margin="50"
-                                SelectionChanged="RecentFilesListBox_SelectionChanged"/>
+                                <Border Width="250" Height="200" Margin="50">
+                                    <ListBox Name="recentFilesListBox"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    SelectionChanged="RecentFilesListBox_SelectionChanged"/>
+                                </Border>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                    <Button Content="Открыть файл" Margin="5" Background="{DynamicResource OptionalBack2}">
-                                        <Button.BorderBrush>
-                                            <ImageBrush/>
-                                        </Button.BorderBrush>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
+                                        <TextBlock Text="Открыть документ" Margin="5" FontSize="14"/>
                                     </Button>
-                                    <Button Content="Новый файл" Margin="5"></Button>
-                                    <Button Content="Закрыть файл" Margin="5"></Button>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
+                                        <TextBlock Text="Новый документ" Margin="5" FontSize="14"/>
+                                    </Button>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
+                                        <TextBlock Text="Сохранить документ" Margin="5" FontSize="14"/>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
+                        <TextBlock x:Name="versionTB" Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                     </Grid>
                 </Border>
             </Grid>

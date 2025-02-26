@@ -23,7 +23,7 @@
                     <Border Background="{DynamicResource OptionalColor}" CornerRadius="15" HorizontalAlignment="Right" Margin="0,0,5,0">
                         <Button x:Name="Close" Content="✕" Width="30" Style="{DynamicResource ButtonFlat}"/>
                     </Border>
-                    <TextBlock Text="Редактор тем" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource tm}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
                 <Border Grid.Row="1" Background="{DynamicResource OptionalColor}" Margin="5" CornerRadius="15">
                     <Grid>
@@ -38,7 +38,7 @@
                                     <Setter Property="CornerRadius" Value="3"/>
                                 </Style>
                             </Button.Resources>
-                            <TextBlock Text="Загрузить" Margin="5,3,5,3" Foreground="White"/>
+                            <TextBlock Text="{DynamicResource tm.load}" Margin="5,3,5,3" Foreground="White"/>
                         </Button>
                     </Grid>
                 </Border>

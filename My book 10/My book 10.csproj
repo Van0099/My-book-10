@@ -85,6 +85,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="VersionInfo_.cs" />
+    <Compile Include="versioninfo_reader.cs" />
     <Compile Include="ColorBox.xaml.cs">
       <DependentUpon>ColorBox.xaml</DependentUpon>
     </Compile>
@@ -174,6 +176,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="versioninfo.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -19,4 +19,16 @@
     <v:String x:Key="settings.language">Язык</v:String>
     <v:String x:Key="settings.spellcheck">Орфография</v:String>
     <v:String x:Key="settings.spellchekc.enable">Проверка орфографии</v:String>
+    <v:String x:Key="te">Редактор тем</v:String>
+    <v:String x:Key="te.save">Сохранить тему</v:String>
+    <v:String x:Key="te.themetype">Тип темы</v:String>
+    <v:String x:Key="te.themename">Имя файла</v:String>
+    <v:String x:Key="te.background">Фон</v:String>
+    <v:String x:Key="te.brandcolor">Основной цвет</v:String>
+    <v:String x:Key="te.optionalcolor">Дополнительный цвет</v:String>
+    <v:String x:Key="te.optionalback">Дополнительный фон</v:String>
+    <v:String x:Key="te.foreground">Цвет текста</v:String>
+    <v:String x:Key="te.optionalback2">Дополнительный фон 2</v:String>
+    <v:String x:Key="tm">Мэнэджер тем</v:String>
+    <v:String x:Key="tm.load">Загрузить тему</v:String>
 </ResourceDictionary>

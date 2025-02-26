@@ -18,5 +18,17 @@
     <v:String x:Key="settings.theme.system">System</v:String>
     <v:String x:Key="settings.language">Language</v:String>
     <v:String x:Key="settings.spellcheck">SpellCheck</v:String>
-    <v:String x:Key="settings.spellchekc.enable">Enable SpellCheck</v:String>
+    <v:String x:Key="settings.spellchekc.enable">Enable SpelкCheck</v:String>
+    <v:String x:Key="te">Theme Editor</v:String>
+    <v:String x:Key="te.save">Save Theme</v:String>
+    <v:String x:Key="te.themetype">Theme Type</v:String>
+    <v:String x:Key="te.themename">File Name</v:String>
+    <v:String x:Key="te.background">Back Ground</v:String>
+    <v:String x:Key="te.brandcolor">Brand Color</v:String>
+    <v:String x:Key="te.optionalcolor">Optional Color</v:String>
+    <v:String x:Key="te.optionalback">Optional Back</v:String>
+    <v:String x:Key="te.foreground">Fore Ground</v:String>
+    <v:String x:Key="te.optionalback2">Optional Back 2</v:String>
+    <v:String x:Key="tm">Theme Manager</v:String>
+    <v:String x:Key="tm.load">Load Theme</v:String>
 </ResourceDictionary>

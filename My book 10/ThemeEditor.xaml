@@ -26,50 +26,50 @@
                             <Button x:Name="Close" Content="✕" Width="30" Style="{DynamicResource ButtonFlat}" Click="Close_Click" />
                         </StackPanel>
                     </Border>
-                    <TextBlock Text="Редактор тем" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource te}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10" Orientation="Vertical">
-                                    <TextBlock Text="Фон" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.background}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sBackGround"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Основной цвет" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.brandcolor}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sBrandColor"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Дополнительный цвет" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.optionalcolor}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sOptionalColor"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Дополнительный фон" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.optionalback}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sOptionalBack"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Цвет текста" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.foreground}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sForeGround"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5,5,5,35">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Дополнительный фон 2" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.optionalback2}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <local:ColorBox x:Name="sOptionalBack2"/>
                                 </StackPanel>
                             </Border>
                             <Border Background="{DynamicResource BrandColor}" CornerRadius="15" Margin="5,5,5,35">
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Тип темы" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
+                                    <TextBlock Text="{DynamicResource te.themetype}" Foreground="White" HorizontalAlignment="Center" FontSize="15"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <RadioButton x:Name="Light" GroupName="ThemeType">
                                             <TextBlock Text="{DynamicResource settings.theme.light}"/>
@@ -89,7 +89,7 @@
                         </StackPanel>
                     </ScrollViewer>
                     <Button VerticalAlignment="Bottom" Click="SaveTheme_Click" Margin="5" Style="{StaticResource ColorButton}" Background="{DynamicResource OptionalColor}">
-                        <TextBlock Text="Создать тему" Margin="5" FontSize="16"/>
+                        <TextBlock Text="{DynamicResource te.save}" Margin="5" FontSize="16"/>
                     </Button>
                 </Grid>
             </Grid>

@@ -169,6 +169,13 @@ namespace My_book_10
             }
 		}
 
+		private void VersionRead()
+		{
+            VersionReader reader = new VersionReader("version.json");
+            VersionInfo version = reader.LoadVersion();
+			versionTB.Text = $"My book {version.PublicVersion} {version.VersionType} {version.VersionID}";
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateAppIcon();
@@ -1173,6 +1180,24 @@ namespace My_book_10
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             WindowHelper.BringWindowToFront<ThemeManager>();
+        }
+
+        private void CreateListParameter(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            // Извлекаем параметр из свойства Tag и приводим его к типу double
+            bool parameter = (Boolean)button.Tag;
+
+			ToggleList(parameter);
+        }
+
+        private void InsertList_Click(object sender, RoutedEventArgs e)
+        {
+			if (ListParameter.Visibility != Visibility.Visible)
+				ListParameter.Visibility = Visibility.Visible;
+			else
+				ListParameter.Visibility = Visibility.Hidden;
         }
     }
 }
