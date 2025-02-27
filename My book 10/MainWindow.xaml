@@ -13,6 +13,11 @@
         ResizeMode="CanResize"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
         Title="MainWindow" Height="450" Width="800" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" MouseLeftButtonDown="Window_MouseLeftButtonDown" Loaded="MainWindow_Loaded">
+
+    <Window.RenderTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1"/>
+    </Window.RenderTransform>
+
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="ToggleButton">

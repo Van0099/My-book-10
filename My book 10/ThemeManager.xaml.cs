@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
+using System.Windows.Media.Animation;
 
 namespace My_book_10
 {
@@ -138,6 +139,12 @@ namespace My_book_10
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard openAnimation = (Storyboard)FindResource("OpenWindowAnimation");
+            openAnimation.Begin(this);
         }
     }
 }

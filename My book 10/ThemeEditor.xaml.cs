@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace My_book_10
 {
@@ -105,6 +106,12 @@ namespace My_book_10
         {
             bool isDarkMode = Dark.IsChecked == true;
             SaveTheme(isDarkMode);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard openAnimation = (Storyboard)FindResource("OpenWindowAnimation");
+            openAnimation.Begin(this);
         }
     }
 }

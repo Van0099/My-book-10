@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -45,7 +46,22 @@ namespace My_book_10
 		public static string theme;
 		public static string language;
 		public static bool spellcheck;
-		public MainWindow()
+
+        public void ShowWithAnimation(FrameworkElement element)
+        {
+            if (element.Visibility != Visibility.Visible)
+            {
+                element.Visibility = Visibility.Visible;
+                element.Opacity = 0; // Ставим 0 перед анимацией
+
+                if (element.FindResource("FadeInAnimation") is Storyboard fadeIn)
+                {
+                    fadeIn.Begin(element);
+                }
+            }
+        }
+
+        public MainWindow()
 		{
 			InitializeComponent();
 			cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
@@ -174,12 +190,14 @@ namespace My_book_10
 		{
             VersionInfoReader reader = new VersionInfoReader();
             VersionInfo version = reader.ReadVersionInfo();
-            versionTB.Text = $"My book {version.PublicVersion} {version.VersionType} {version.VersionID} Beta: {version.isBeta.ToString()}";
+            versionTB.Text = $"My book {version.PublicVersion} {version.VersionType} {version.VersionID}";
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateAppIcon();
+            Storyboard openAnimation = (Storyboard)FindResource("OpenWindowAnimation");
+            openAnimation.Begin(this);
         }
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -563,8 +581,9 @@ namespace My_book_10
 		{
 			if (Menu.Visibility != Visibility.Visible)
 			{
-				Menu.Visibility = Visibility.Visible;
-			}
+                Menu.Visibility = Visibility.Visible;
+                //ShowWithAnimation(Menu);
+            }
 			else
 			{
 				Menu.Visibility = Visibility.Hidden;
@@ -578,7 +597,8 @@ namespace My_book_10
 				if (Menu.Visibility != Visibility.Visible)
 				{
 					Menu.Visibility = Visibility.Visible;
-				}
+                    //ShowWithAnimation(Menu);
+                }
 				else
 				{
 					Menu.Visibility = Visibility.Hidden;

@@ -11,7 +11,12 @@
         mc:Ignorable="d"
         ResizeMode="CanResize"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="MainWindow" Height="300" Width="300" Background="Transparent" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" ShowInTaskbar="False">
+        Title="MainWindow" Height="300" Width="300" Background="Transparent" Loaded="Window_Loaded" AllowsTransparency="True" WindowStyle="None" Icon="/Resources/icon.png" ShowInTaskbar="False">
+
+    <Window.RenderTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1"/>
+    </Window.RenderTransform>
+
     <Grid>
         <Border Background="{DynamicResource BackGround}" CornerRadius="15">
             <Grid>
