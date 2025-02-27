@@ -1,5 +1,5 @@
 {
-    "PublicVersion": "10",
-    "VersionType": "preview",
-    "VersionID": "2"
+    "PublicVersion": 10,
+    "VersionType": "Preview",
+    "VersionID": 2,
 }

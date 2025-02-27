@@ -166,14 +166,15 @@ namespace My_book_10
 				UpdateRecentFilesList();
                 SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
                 this.Closed += (s, e) => SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
+				VersionRead();
             }
 		}
 
 		private void VersionRead()
 		{
-            VersionReader reader = new VersionReader("version.json");
-            VersionInfo version = reader.LoadVersion();
-			versionTB.Text = $"My book {version.PublicVersion} {version.VersionType} {version.VersionID}";
+            VersionInfoReader reader = new VersionInfoReader();
+            VersionInfo version = reader.ReadVersionInfo();
+            versionTB.Text = $"My book {version.PublicVersion} {version.VersionType} {version.VersionID} Beta: {version.isBeta.ToString()}";
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

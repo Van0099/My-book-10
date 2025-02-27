@@ -4,24 +4,19 @@ using Newtonsoft.Json;
 
 namespace My_book_10
 {
-    public class VersionReader
+    public class VersionInfoReader
     {
-        private string versionFilePath;
+        private string filePath = "versioninfo.json"; // Путь к файлу в корне проекта
 
-        public VersionReader(string filePath)
+        public VersionInfo ReadVersionInfo()
         {
-            versionFilePath = filePath;
-        }
-
-        public VersionInfo LoadVersion()
-        {
-            if (!File.Exists(versionFilePath))
+            if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("Файл версии не найден: " + versionFilePath);
+                throw new FileNotFoundException("Файл версии не найден", filePath);
             }
 
-            string jsonContent = File.ReadAllText(versionFilePath);
-            return JsonConvert.DeserializeObject<VersionInfo>(jsonContent);
+            string json = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<VersionInfo>(json);
         }
     }
 }
