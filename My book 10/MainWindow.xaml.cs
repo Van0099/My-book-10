@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Windows.Markup;
 using System.IO;
-using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
-using System.Runtime.Remoting.Contexts;
-using System.Data.SqlTypes;
 using Newtonsoft.Json;
-using System.Reflection;
 
 
 namespace My_book_10
@@ -312,7 +302,11 @@ namespace My_book_10
 					{
 						range.Save(fileStream, DataFormats.Text);
 					}
-				}
+                    else if (extension == ".pdf")
+                    {
+                        range.Save(fileStream, DataFormats.Text);
+                    }
+                }
 			}
 			else
 			{
