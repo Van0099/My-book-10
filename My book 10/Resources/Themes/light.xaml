@@ -7,6 +7,10 @@
     <BitmapImage x:Key="Image.Add" UriSource="/Resources/icons/addimage.png" />
     <BitmapImage x:Key="Image.Remove" UriSource="/Resources/icons/removeimage.png" />
 
+    <BitmapImage x:Key="Search" UriSource="/Resources/icons/search.png"/>
+    <BitmapImage x:Key="Search.Next" UriSource="/Resources/icons/searchnext.png"/>
+    <BitmapImage x:Key="Search.Back" UriSource="/Resources/icons/searchback.png"/>
+
     <BitmapImage x:Key="Cm.Copy" UriSource="/Resources/icons/copy.png" />
     <BitmapImage x:Key="Cm.Paste" UriSource="/Resources/icons/paste.png" />
     <BitmapImage x:Key="Cm.SelectAll" UriSource="/Resources/icons/selectall.png" />

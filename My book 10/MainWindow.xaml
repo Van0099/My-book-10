@@ -70,7 +70,7 @@
         <Border Background="{DynamicResource BackGround}" CornerRadius="15">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
+                    <RowDefinition x:Name="Items" Height="35"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -99,7 +99,7 @@
                             <TextBlock FontSize="11" TextAlignment="Center" Text="View"/>
                             <Button.ContextMenu>
                                 <ContextMenu>
-                                    <TextBlock Text="Focus Mode"/>
+                                    <MenuItem Header="{DynamicResource items.view.focusmode}" Click="FocusMode"/>
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
@@ -140,8 +140,24 @@
                                 </RichTextBox.ContextMenu>
                             </RichTextBox>
                         </Border>
-                        <Grid Grid.Row="0">
+                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15,0,15,0">
+                                <Border Background="{DynamicResource OptionalBack2}" Margin="5" CornerRadius="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Margin="3" Grid.Column="0" Grid.Row="0" Style="{DynamicResource SearchButton}" Click="SearchButton_Click">
+                                            <Image Source="{DynamicResource Search}"/>
+                                        </Button>
+
+                                    </Grid>
+                                </Border>
                                 <ComboBox x:Name="cmbFontFamily" Text="Comfortaa" Margin="5" Width="100" SelectionChanged="cmbFontFamily_SelectionChanged"/>
                                 <ComboBox x:Name="cmbFontSize" Margin="5" Width="30" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged"/>
                                 <ToggleButton Width="40" x:Name="Bold" Margin="5" Checked="BoldToggleButton_Checked" Unchecked="BoldToggleButton_Unchecked">
@@ -178,7 +194,7 @@
                                     <Image Source="{DynamicResource List.Insert}" Margin="7"/>
                                 </Button>
                             </StackPanel>
-                        </Grid>
+                        </ScrollViewer>
                         <Border x:Name="SetLineH" CornerRadius="15" Visibility="Hidden" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1">
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="50" Height="20" Margin="5" CornerRadius="10" Background="{DynamicResource BackGround}">
@@ -228,6 +244,17 @@
                                 </StackPanel>
                                 <Button Margin="5,0,5,5" Style="{StaticResource CornerButton}" Height="20" Click="InsertTable_apply">
                                     <TextBlock Text="{DynamicResource rich.table.apply}"/>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="Search" CornerRadius="15" Visibility="Hidden" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Grid.Row="1">
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBox x:Name="SearchBox" Width="200" Margin="3"/>
+                                <Button x:Name="SearchBack" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
+                                    <Image Source="{DynamicResource Search.Back}" Margin="3"/>
+                                </Button>
+                                <Button x:Name="SearchNext" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
+                                    <Image Source="{DynamicResource Search.Next}" Margin="3"/>
                                 </Button>
                             </StackPanel>
                         </Border>
@@ -322,7 +349,7 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Border x:Name="Menu" Visibility="Visible" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
+                <Border x:Name="Menu" Visibility="Hidden" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#FF929292"/>
                     </Border.Effect>

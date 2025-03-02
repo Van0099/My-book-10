@@ -6,6 +6,7 @@
     <v:String x:Key="items.save">Save</v:String>
     <v:String x:Key="items.new">New</v:String>
     <v:String x:Key="items.close">Close</v:String>
+    <v:String x:Key="items.view.focusmode">Focus Mode</v:String>
     <v:String x:Key="rich.color">Colors</v:String>
     <v:String x:Key="rich.table">Size of table:</v:String>
     <v:String x:Key="rich.table.apply">Apply</v:String>

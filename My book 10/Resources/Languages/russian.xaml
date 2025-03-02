@@ -6,6 +6,7 @@
     <v:String x:Key="items.save">Сохранить</v:String>
     <v:String x:Key="items.new">Новый</v:String>
     <v:String x:Key="items.close">Закрыть</v:String>
+    <v:String x:Key="items.view.focusmode">Режим фокусирования</v:String>
     <v:String x:Key="rich.color">Цвета</v:String>
     <v:String x:Key="rich.table">Размер таблицы:</v:String>
     <v:String x:Key="rich.table.apply">Применить</v:String>

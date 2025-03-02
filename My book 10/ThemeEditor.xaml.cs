@@ -69,6 +69,10 @@ namespace My_book_10
                         <BitmapImage x:Key=""Image.Add"" UriSource=""pack://application:,,,/Resources/icons/addimage{iconSuffix}.png"" />
                         <BitmapImage x:Key=""Image.Remove"" UriSource=""pack://application:,,,/Resources/icons/removeimage{iconSuffix}.png"" />
 
+                        <BitmapImage x:Key=""Search"" UriSource=""pack://application:,,,/Resources/icons/search{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Search.Next"" UriSource=""pack://application:,,,/Resources/icons/searchnext{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""Search.Back"" UriSource=""pack://application:,,,/Resources/icons/searchback{iconSuffix}.png"" />
+
                         <BitmapImage x:Key=""Cm.Copy"" UriSource=""pack://application:,,,/Resources/icons/copy{iconSuffix}.png"" />
                         <BitmapImage x:Key=""Cm.Paste"" UriSource=""pack://application:,,,/Resources/icons/paste{iconSuffix}.png"" />
                         <BitmapImage x:Key=""Cm.SelectAll"" UriSource=""pack://application:,,,/Resources/icons/selectall{iconSuffix}.png"" />

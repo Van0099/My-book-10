@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
 
 
 namespace My_book_10
@@ -36,6 +38,9 @@ namespace My_book_10
 		public static string theme;
 		public static string language;
 		public static bool spellcheck;
+		static bool isFocusMode = false;
+
+        private int lastIndex = 0;
 
         public void ShowWithAnimation(FrameworkElement element)
         {
@@ -50,6 +55,8 @@ namespace My_book_10
                 }
             }
         }
+
+        private SearchService searcher; // Было TestSearcher, но должен быть TextSearcher
 
         public MainWindow()
 		{
@@ -213,7 +220,29 @@ namespace My_book_10
 			Application.Current.Shutdown();
 		}
 
-		private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+			if (Search.Visibility != Visibility.Visible)
+				Search.Visibility = Visibility.Visible;
+			else
+				Search.Visibility = Visibility.Hidden;
+        }
+
+        private void FocusMode(object sender, RoutedEventArgs e)
+        {
+			if (isFocusMode != false)
+			{
+                Items.Height = new GridLength(0, GridUnitType.Star);
+				isFocusMode = true;
+            }
+			else
+			{
+                Items.Height = new GridLength(50, GridUnitType.Star);
+				isFocusMode = false;
+            }
+        }
+
+        private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (cmbFontFamily.SelectedItem != null)
 				rtbEditor.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
@@ -302,16 +331,12 @@ namespace My_book_10
 					{
 						range.Save(fileStream, DataFormats.Text);
 					}
-                    else if (extension == ".pdf")
-                    {
-                        range.Save(fileStream, DataFormats.Text);
-                    }
                 }
 			}
 			else
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.Filter = "Rich Text Format (*.rtf)|*.rtf|Text File (*.txt)|*.txt|All files (*.*)|*.*";
+				dlg.Filter = "Rich Text Format (*.rtf)|*.rtf|Portable Document Format (*.pdf)|*.pdf|Text File (*.txt)|*.txt|All files (*.*)|*.*";
 				if (dlg.ShowDialog() == true)
 				{
 					string extension = System.IO.Path.GetExtension(dlg.FileName).ToLower();
@@ -327,7 +352,23 @@ namespace My_book_10
 						range.Save(fileStream, DataFormats.Text);
 						filename = dlg.FileName;
 					}
-				}
+                    else if (extension == ".pdf")
+                    {
+                        PdfDocument document = new PdfDocument();
+                        document.Info.Title = "Экспортированный документ";
+
+                        PdfPage page = document.AddPage();
+                        XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                        // Пример: выводим текст из RichTextBox в PDF
+                        string text = range.Text;
+
+                        XFont font = new XFont("Verdana", 12);
+                        gfx.DrawString(text, font, XBrushes.Black, new XRect(40, 40, page.Width - 80, page.Height - 80), XStringFormats.TopLeft);
+
+                        document.Save(fileStream);
+                    }
+                }
 			}
 		}
 
@@ -1214,6 +1255,7 @@ namespace My_book_10
 			else
 				ListParameter.Visibility = Visibility.Hidden;
         }
+
     }
 }
 
