@@ -349,7 +349,7 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Border x:Name="Menu" Visibility="Hidden" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
+                <Border x:Name="Menu" Visibility="Visible" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#FF929292"/>
                     </Border.Effect>
@@ -394,7 +394,10 @@
                                     </StackPanel>
                                 </Border>
                                 <Button Click="Button_Click" Style="{StaticResource CornerButton}" Margin="5">
-                                    <TextBlock Text="Открыть редактор тем" Margin="5"/>
+                                    <TextBlock Text="{DynamicResource te.open}" Margin="5"/>
+                                </Button>
+                                <Button x:Name="CheckUpdate" Click="CheckUpdate_Click" Style="{StaticResource CornerButton}" Margin="5">
+                                    <TextBlock Text="{DynamicResource menu.checkupdate}" Margin="5"/>
                                 </Button>
                             </StackPanel>
                         </Border>
@@ -407,14 +410,14 @@
                                     SelectionChanged="RecentFilesListBox_SelectionChanged"/>
                                 </Border>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
-                                        <TextBlock Text="Открыть документ" Margin="5" FontSize="14"/>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}" Background="{DynamicResource BrandColor}">
+                                        <TextBlock Text="{DynamicResource menu.open}" Margin="5" FontSize="14"/>
                                     </Button>
-                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
-                                        <TextBlock Text="Новый документ" Margin="5" FontSize="14"/>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}" Background="{DynamicResource BrandColor}">
+                                        <TextBlock Text="{DynamicResource menu.new}" Margin="5" FontSize="14"/>
                                     </Button>
-                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}">
-                                        <TextBlock Text="Сохранить документ" Margin="5" FontSize="14"/>
+                                    <Button Margin="5" Height="50" Style="{StaticResource CornerButton}" Background="{DynamicResource BrandColor}">
+                                        <TextBlock Text="{DynamicResource menu.save}" Margin="5" FontSize="14"/>
                                     </Button>
                                 </StackPanel>
                             </StackPanel>

@@ -1256,6 +1256,10 @@ namespace My_book_10
 				ListParameter.Visibility = Visibility.Hidden;
         }
 
+        private void CheckUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateService.CheckForUpdatesAsync();
+        }
     }
 }
 

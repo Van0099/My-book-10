@@ -148,6 +148,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SearchService.cs" />
+    <Compile Include="UpdateService.cs" />
     <Compile Include="VersionInfo_.cs" />
     <Compile Include="versioninfo_reader.cs" />
     <Compile Include="ColorBox.xaml.cs">
