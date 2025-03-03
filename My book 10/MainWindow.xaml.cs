@@ -27,7 +27,6 @@ namespace My_book_10
 			public string Theme { get; set; }
 			public string Language { get; set; }
 			public bool Spellcheck { get; set; }
-			public bool ToolTipEnable { get; set; } = true;
         }
 
 		private static readonly string settingsfile = System.IO.Path.Combine(
@@ -40,8 +39,6 @@ namespace My_book_10
 		public static string language;
 		public static bool spellcheck;
 		static bool isFocusMode = false;
-
-        private int lastIndex = 0;
 
         public void ShowWithAnimation(FrameworkElement element)
         {
@@ -62,7 +59,7 @@ namespace My_book_10
         public MainWindow()
 		{
 			InitializeComponent();
-			cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
+            cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
 			cmbFontSize.ItemsSource = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
 			{
 

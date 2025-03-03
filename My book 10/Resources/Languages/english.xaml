@@ -37,6 +37,7 @@
     <v:String x:Key="te.optionalback2">Optional Back 2</v:String>
     <v:String x:Key="tm">Theme Manager</v:String>
     <v:String x:Key="tm.load">Load Theme</v:String>
+    <v:String x:Key="tooltip.search">Seach</v:String>
     <v:String x:Key="tooltip.font">Font</v:String>
     <v:String x:Key="tooltip.fontsize">Font Size</v:String>
 </ResourceDictionary>

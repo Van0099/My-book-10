@@ -152,14 +152,14 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Margin="3" Grid.Column="0" ToolTip="{DynamicResource Search}" Grid.Row="0" Style="{DynamicResource SearchButton}" Click="SearchButton_Click">
+                                        <Button Margin="3" Grid.Column="0" ToolTip="{DynamicResource tooltip.search}" Grid.Row="0" Style="{DynamicResource SearchButton}" Click="SearchButton_Click">
                                             <Image Source="{DynamicResource Search}"/>
                                         </Button>
 
                                     </Grid>
                                 </Border>
-                                <ComboBox x:Name="cmbFontFamily" Text="Comfortaa" Margin="5" Width="100" SelectionChanged="cmbFontFamily_SelectionChanged"/>
-                                <ComboBox x:Name="cmbFontSize" Margin="5" Width="30" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged"/>
+                                <ComboBox x:Name="cmbFontFamily" ToolTip="{DynamicResource tooltip.font}" Text="Comfortaa" Margin="5" Width="100" SelectionChanged="cmbFontFamily_SelectionChanged"/>
+                                <ComboBox x:Name="cmbFontSize" ToolTip="{DynamicResource tooltip.fontsize}" Margin="5" Width="30" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged"/>
                                 <ToggleButton Width="40" x:Name="Bold" Margin="5" Checked="BoldToggleButton_Checked" Unchecked="BoldToggleButton_Unchecked">
                                     <TextBlock Text="B" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14"/>
                                 </ToggleButton>
@@ -370,7 +370,7 @@
                                             <RadioButton x:Name="Light" Margin="5" GroupName="Theme" Foreground="White" BorderBrush="#00060606" Background="{DynamicResource OptionalBack}" Checked="Light_Checked">
                                                 <TextBlock Text="{DynamicResource settings.theme.light}"/>
                                             </RadioButton>
-                                            <Button Style="{DynamicResource ButtonFlat}" Click="Button_Click_1" Margin="15,5,5,5">
+                                            <Button ToolTip="{DynamicResource tm}" Style="{DynamicResource ButtonFlat}" Click="Button_Click_1" Margin="15,5,5,5">
                                                 <Image Source="{StaticResource ThemeManager}" Width="20"/>
                                             </Button>
                                         </StackPanel>

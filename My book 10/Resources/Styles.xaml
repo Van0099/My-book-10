@@ -20,14 +20,14 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
 
-    <Style TargetType="ToolTip">
+    <!--<Style TargetType="ToolTip">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding ToolTipEnable, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
 
     <Style x:Key="SearchButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>

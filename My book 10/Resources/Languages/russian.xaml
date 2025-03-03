@@ -37,6 +37,7 @@
     <v:String x:Key="te.optionalback2">Дополнительный фон 2</v:String>
     <v:String x:Key="tm">Мэнэджер тем</v:String>
     <v:String x:Key="tm.load">Загрузить тему</v:String>
+    <v:String x:Key="tooltip.search">Поиск</v:String>
     <v:String x:Key="tooltip.font">Шрифт</v:String>
     <v:String x:Key="tooltip.fontsize">Размер шрифта</v:String>
 </ResourceDictionary>

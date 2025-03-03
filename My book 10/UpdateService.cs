@@ -3,11 +3,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
-using System.Windows;
 
 public class UpdateService
 {
-    private const string VersionInfoUrl = "https://raw.githubusercontent.com/Van0099/My-book-10/main/versioninfo.json";
+    private const string VersionInfoUrl = "https://github.com/Van0099/My-book-10/releases/latest/download/versioninfo.json";
     private const string CurrentVersionFile = "versioninfo.json";
 
     public static async Task<bool> IsUpdateAvailableAsync()
@@ -22,7 +21,7 @@ public class UpdateService
                 if (remoteVersion == null)
                     return false;
 
-                var localVersion = usVersionInfo.LoadFromFile(CurrentVersionFile);
+                var localVersion = await VersionInfo_.LoadFromFileAsync(CurrentVersionFile);
 
                 if (localVersion == null)
                     return true;
@@ -44,27 +43,28 @@ public class UpdateService
 
         if (isUpdateAvailable)
         {
-            MessageBox.Show("Доступна новая версия My book!", "Обновление", MessageBoxButton.OK, MessageBoxImage.Information);
+            Console.WriteLine("Доступно новое обновление!");
+            // Здесь можно добавить логику для загрузки и установки обновления
         }
         else
         {
-            MessageBox.Show("У вас установлена последняя версия My book", "Обновление", MessageBoxButton.OK, MessageBoxImage.Information);
+            Console.WriteLine("У вас установлена последняя версия My Book.");
         }
     }
 }
 
-public class usVersionInfo
+public class VersionInfo_
 {
     public string PublicVersion { get; set; }
     public string VersionType { get; set; }
     public string VersionID { get; set; }
 
-    public static VersionInfo LoadFromFile(string filePath)
+    public static async Task<VersionInfo> LoadFromFileAsync(string filePath)
     {
         if (!File.Exists(filePath))
             return null;
 
-        string json = File.ReadAllText(filePath);
+        string json = await File.ReadAllTextAsync(filePath);
         return JsonConvert.DeserializeObject<VersionInfo>(json);
     }
 }
