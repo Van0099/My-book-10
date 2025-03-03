@@ -27,6 +27,7 @@ namespace My_book_10
 			public string Theme { get; set; }
 			public string Language { get; set; }
 			public bool Spellcheck { get; set; }
+			public bool ToolTipEnable { get; set; } = true;
         }
 
 		private static readonly string settingsfile = System.IO.Path.Combine(
@@ -1259,6 +1260,26 @@ namespace My_book_10
         private void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
             UpdateService.CheckForUpdatesAsync();
+            UpdateMessage.Visibility = Visibility.Visible;
+
+            // Находим Storyboard по имени
+            Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
+
+            // Запускаем анимацию
+            storyboard.Begin();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Storyboard hideStoryboard = (Storyboard)UpdateMessage.Resources["HideAnimation"];
+
+            // Запускаем анимацию
+            hideStoryboard.Begin();
+        }
+
+        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        {
+            UpdateMessage.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -152,7 +152,7 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Margin="3" Grid.Column="0" Grid.Row="0" Style="{DynamicResource SearchButton}" Click="SearchButton_Click">
+                                        <Button Margin="3" Grid.Column="0" ToolTip="{DynamicResource Search}" Grid.Row="0" Style="{DynamicResource SearchButton}" Click="SearchButton_Click">
                                             <Image Source="{DynamicResource Search}"/>
                                         </Button>
 
@@ -349,7 +349,7 @@
                         </Border>
                     </Grid>
                 </Border>
-                <Border x:Name="Menu" Visibility="Visible" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
+                <Border x:Name="Menu" Visibility="Hidden" Grid.Row="1" Margin="10" CornerRadius="15" Background="{DynamicResource OptionalBack}">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#FF929292"/>
                     </Border.Effect>
@@ -423,6 +423,24 @@
                             </StackPanel>
                         </StackPanel>
                         <TextBlock x:Name="versionTB" Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                <Border x:Name="UpdateMessage" Grid.RowSpan="2" Width="200" Visibility="Hidden" Height="100" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Background="#FFFFD051" >
+                    <Border.Resources>
+                        <Storyboard x:Key="BorderAnimation">
+                            <!-- Анимация плавного появления (Opacity) -->
+                            <DoubleAnimation Storyboard.TargetName="UpdateMessage" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" />
+
+                            <!-- Анимация выдвижения из верхней части (Margin) -->
+                            <ThicknessAnimation Storyboard.TargetName="UpdateMessage" Storyboard.TargetProperty="Margin" From="5,-100,5,5" To="5,5,5,5" Duration="0:0:1" />
+                        </Storyboard>
+                        <Storyboard x:Key="HideAnimation">
+                            <DoubleAnimation Storyboard.TargetName="UpdateMessage" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" Completed="DoubleAnimation_Completed" />
+                        </Storyboard>
+                    </Border.Resources>
+                    <Grid>
+                        <TextBlock Text="Обновлений не найдено" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Comfortaa Light"/>
+                        <Button Style="{DynamicResource ButtonFlat}" Click="Button_Click_2" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"/>
                     </Grid>
                 </Border>
             </Grid>
