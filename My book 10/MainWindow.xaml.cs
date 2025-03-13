@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
+using static UpdateService;
 
 
 namespace My_book_10
@@ -77,61 +78,6 @@ namespace My_book_10
 				{
 					ChangeSetting(new Uri("Resources/Themes/dark.xaml", UriKind.Relative));
 				}
-				//else
-				//{
-    //                var dictionaries = Application.Current.Resources.MergedDictionaries;
-
-    //                // Удаляем стандартные темы
-    //                string lightThemePath = "Resources/Themes/light.xaml";
-    //                string darkThemePath = "Resources/Themes/dark.xaml";
-
-    //                var toRemove = dictionaries.Where(d =>
-    //                    d.Source != null &&
-    //                    (d.Source.OriginalString == lightThemePath || d.Source.OriginalString == darkThemePath))
-    //                    .ToList();
-
-    //                foreach (var dict in toRemove)
-    //                {
-    //                    dictionaries.Remove(dict);
-    //                }
-
-    //                if (File.Exists(settings.Theme))
-    //                {
-    //                    try
-    //                    {
-    //                        Uri themeUri = new Uri(settings.Theme, UriKind.RelativeOrAbsolute);
-    //                        MessageBox.Show("Загружаемая тема: " + themeUri.ToString());
-
-    //                        ResourceDictionary Setting = new ResourceDictionary { Source = themeUri };
-    //                        Application.Current.Resources.MergedDictionaries.Add(Setting);
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        MessageBox.Show("Ошибка загрузки темы через Uri: " + ex.Message);
-
-    //                        try
-    //                        {
-    //                            // Попробуем загрузить вручную
-    //                            string xamlContent = File.ReadAllText(settings.Theme);
-    //                            using (StringReader stringReader = new StringReader(xamlContent))
-    //                            using (XmlReader xmlReader = XmlReader.Create(stringReader))
-    //                            {
-    //                                ResourceDictionary setting = (ResourceDictionary)XamlReader.Load(xmlReader);
-    //                                Application.Current.Resources.MergedDictionaries.Add(setting);
-    //                            }
-    //                        }
-    //                        catch (Exception ex2)
-    //                        {
-    //                            MessageBox.Show("Ошибка загрузки темы через XamlReader: " + ex2.Message);
-    //                        }
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    MessageBox.Show("Файл темы не найден, применяется стандартная светлая тема.");
-    //                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri(lightThemePath, UriKind.Relative) });
-    //                }
-    //            }
 				if (language == "ru")
 				{
 					ChangeSetting(new Uri("Resources/Languages/russian.xaml", UriKind.Relative));
@@ -1254,16 +1200,48 @@ namespace My_book_10
 				ListParameter.Visibility = Visibility.Hidden;
         }
 
-        private void CheckUpdate_Click(object sender, RoutedEventArgs e)
+        private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateService.CheckForUpdatesAsync();
-            UpdateMessage.Visibility = Visibility.Visible;
+			MessageBox.Show("async");
+            try
+            {
+				MessageBox.Show("yes");
+                UpdateInfo updateInfo = await UpdateService.GetUpdateInfoAsync();
+                List<UpdateInfoRow> updateRows = new List<UpdateInfoRow>
+				{
+					new UpdateInfoRow { RemoteValue = updateInfo.RemoteVersionType, LocalValue = updateInfo.LocalVersionType },
+					new UpdateInfoRow { RemoteValue = updateInfo.RemoteVersionID, LocalValue = updateInfo.LocalVersionID }
+				};
 
-            // Находим Storyboard по имени
-            Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
+                //if (updateInfo.RemoteVersionType == updateInfo.LocalVersionType &&
+                //updateInfo.RemoteVersionID == updateInfo.LocalVersionID)
+                //{
+                //    UpdateStatusText.Text = (string)Application.Current.Resources["us.versionavilable"];
+                //}
+                //else
+                //{
+                //    UpdateStatusText.Text = (string)Application.Current.Resources["us.versionislatest"];
+                //}
+                UpdateStatusText.Text = updateInfo.IsUpdateAvailable ? (string)Application.Current.Resources["us.versionavilable"] : (string)Application.Current.Resources["us.versionislatest"];
 
-            // Запускаем анимацию
-            storyboard.Begin();
+                UpdateTable.ItemsSource = updateRows;
+				UpdateMessage.Visibility = Visibility.Visible;
+
+                Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
+                storyboard.Begin();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при проверке обновлений: {ex.Message}");
+            }
+
+            //UpdateStatusText.Text = updateInfo.IsUpdateAvailable ? "Доступно обновление!" : "У вас последняя версия.";
+
+            //UpdateTable.ItemsSource = new List<UpdateInfo> { updateInfo };
+
+            //Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
+            //storyboard.Begin();
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

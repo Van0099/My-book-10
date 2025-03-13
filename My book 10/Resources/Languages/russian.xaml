@@ -40,4 +40,9 @@
     <v:String x:Key="tooltip.search">Поиск</v:String>
     <v:String x:Key="tooltip.font">Шрифт</v:String>
     <v:String x:Key="tooltip.fontsize">Размер шрифта</v:String>
+    <v:String x:Key="us.versionavilable">Доступно обновление</v:String>
+    <v:String x:Key="us.versionislatest">Установлена последняя версия</v:String>
+    <v:String x:Key="us.info">Доп. инфо</v:String>
+    <v:String x:Key="us.remote">Удалённый</v:String>
+    <v:String x:Key="us.local">Локальный</v:String>
 </ResourceDictionary>

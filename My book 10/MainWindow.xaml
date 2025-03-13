@@ -425,7 +425,7 @@
                         <TextBlock x:Name="versionTB" Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                     </Grid>
                 </Border>
-                <Border x:Name="UpdateMessage" Grid.RowSpan="2" Width="200" Visibility="Hidden" Height="100" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Background="#FFFFD051" >
+                <Border x:Name="UpdateMessage" Grid.RowSpan="2" Width="250" Visibility="Visible" CornerRadius="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" Background="#FFFFD051" >
                     <Border.Resources>
                         <Storyboard x:Key="BorderAnimation">
                             <!-- Анимация плавного появления (Opacity) -->
@@ -438,9 +438,22 @@
                             <DoubleAnimation Storyboard.TargetName="UpdateMessage" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" Completed="DoubleAnimation_Completed" />
                         </Storyboard>
                     </Border.Resources>
-                    <Grid>
-                        <TextBlock Text="Обновлений не найдено" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Comfortaa Light"/>
-                        <Button Style="{DynamicResource ButtonFlat}" Click="Button_Click_2" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"/>
+                    <Grid Margin="5">
+                        <Button Style="{DynamicResource ButtonFlat}" Click="Button_Click_2" Content="✕" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="0,25,0,0">
+                            <TextBlock x:Name="UpdateStatusText" Text="Обновлений не найдено" FontSize="14" FontFamily="Comfortaa Light"/>
+                            <Expander Header="Доп. инфо" IsExpanded="False" Background="#00FAFAFA">
+                                <DataGrid x:Name="UpdateTable"  Background="#00FAFAFA" IsReadOnly="True" HorizontalScrollBarVisibility="Disabled">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{DynamicResource us.remote}" Binding="{Binding RemoteValue}" Width="*"/>
+                                        <DataGridTextColumn Header="{DynamicResource us.local}" Binding="{Binding LocalValue}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Expander>
+                            <Button Style="{StaticResource CornerButton}" Background="#FFECB930" Margin="5">
+                                <TextBlock Text="Установить обновления" Margin="5"/>
+                            </Button>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>

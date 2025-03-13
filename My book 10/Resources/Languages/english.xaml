@@ -40,4 +40,9 @@
     <v:String x:Key="tooltip.search">Seach</v:String>
     <v:String x:Key="tooltip.font">Font</v:String>
     <v:String x:Key="tooltip.fontsize">Font Size</v:String>
+    <v:String x:Key="us.versionavilable">A new version is available</v:String>
+    <v:String x:Key="us.versionislatest">The latest version is installed</v:String>
+    <v:String x:Key="us.info">Info</v:String>
+    <v:String x:Key="us.remote">Remote</v:String>
+    <v:String x:Key="us.local">Local</v:String>
 </ResourceDictionary>
