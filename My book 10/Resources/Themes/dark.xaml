@@ -10,6 +10,7 @@
     <BitmapImage x:Key="Search" UriSource="/Resources/icons/search_dark.png"/>
     <BitmapImage x:Key="Search.Next" UriSource="/Resources/icons/searchnext.png"/>
     <BitmapImage x:Key="Search.Back" UriSource="/Resources/icons/searchback.png"/>
+    <BitmapImage x:Key="Replace" UriSource="/Resources/icons/replace_dark.png"/>
 
     <BitmapImage x:Key="Cm.Copy" UriSource="/Resources/icons/copy_dark.png" />
     <BitmapImage x:Key="Cm.Paste" UriSource="/Resources/icons/paste_dark.png" />

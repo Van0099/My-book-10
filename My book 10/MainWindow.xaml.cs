@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using static UpdateService;
+using System.Windows.Media.Effects;
 
 
 namespace My_book_10
@@ -174,15 +175,13 @@ namespace My_book_10
 
         private void FocusMode(object sender, RoutedEventArgs e)
         {
-			if (isFocusMode != false)
+			if (isFocusMode != true)
 			{
-                Items.Height = new GridLength(0, GridUnitType.Star);
-				isFocusMode = true;
+				ToggleFocusMode(true);
             }
 			else
 			{
-                Items.Height = new GridLength(50, GridUnitType.Star);
-				isFocusMode = false;
+                ToggleFocusMode(false);
             }
         }
 
@@ -1202,10 +1201,8 @@ namespace My_book_10
 
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-			MessageBox.Show("async");
             try
             {
-				MessageBox.Show("yes");
                 UpdateInfo updateInfo = await UpdateService.GetUpdateInfoAsync();
                 List<UpdateInfoRow> updateRows = new List<UpdateInfoRow>
 				{
@@ -1213,19 +1210,14 @@ namespace My_book_10
 					new UpdateInfoRow { RemoteValue = updateInfo.RemoteVersionID, LocalValue = updateInfo.LocalVersionID }
 				};
 
-                //if (updateInfo.RemoteVersionType == updateInfo.LocalVersionType &&
-                //updateInfo.RemoteVersionID == updateInfo.LocalVersionID)
-                //{
-                //    UpdateStatusText.Text = (string)Application.Current.Resources["us.versionavilable"];
-                //}
-                //else
-                //{
-                //    UpdateStatusText.Text = (string)Application.Current.Resources["us.versionislatest"];
-                //}
+				bool updateavialble;
+				if (updateInfo.IsUpdateAvailable) updateavialble = true;
+				else updateavialble = false;
                 UpdateStatusText.Text = updateInfo.IsUpdateAvailable ? (string)Application.Current.Resources["us.versionavilable"] : (string)Application.Current.Resources["us.versionislatest"];
 
                 UpdateTable.ItemsSource = updateRows;
 				UpdateMessage.Visibility = Visibility.Visible;
+				if (updateavialble) InstallUpdate.Visibility = Visibility.Visible;
 
                 Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
                 storyboard.Begin();
@@ -1256,6 +1248,33 @@ namespace My_book_10
         {
             UpdateMessage.Visibility = Visibility.Hidden;
         }
+
+        private void ToggleFocusMode(bool enable)
+        {
+            isFocusMode = !isFocusMode;
+
+            // Получаем эффекты
+            var blurEffect = (BlurEffect)MainContent.Effect;
+
+            // Анимация размытия
+            DoubleAnimation blurAnimation = new DoubleAnimation
+            {
+                To = isFocusMode ? 10 : 0,
+                Duration = TimeSpan.FromSeconds(0.5)
+            };
+
+            // Анимация затемнения (Opacity)
+            DoubleAnimation opacityAnimation = new DoubleAnimation
+            {
+                To = isFocusMode ? 0.3 : 1, // Затемняем фон (до 30%)
+                Duration = TimeSpan.FromSeconds(0.5)
+            };
+
+            // Запускаем анимации
+            blurEffect.BeginAnimation(BlurEffect.RadiusProperty, blurAnimation);
+            MainContent.BeginAnimation(UIElement.OpacityProperty, opacityAnimation);
+        }
+
     }
 }
 
