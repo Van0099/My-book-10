@@ -56,7 +56,7 @@ namespace My_book_10
             }
         }
 
-        private SearchService searcher; // Было TestSearcher, но должен быть TextSearcher
+        //private SearchService searcher; // Было TestSearcher, но должен быть TextSearcher
 
         public MainWindow()
 		{
@@ -1253,28 +1253,9 @@ namespace My_book_10
         {
             isFocusMode = !isFocusMode;
 
-            // Получаем эффекты
-            var blurEffect = (BlurEffect)MainContent.Effect;
-
-            // Анимация размытия
-            DoubleAnimation blurAnimation = new DoubleAnimation
-            {
-                To = isFocusMode ? 10 : 0,
-                Duration = TimeSpan.FromSeconds(0.5)
-            };
-
-            // Анимация затемнения (Opacity)
-            DoubleAnimation opacityAnimation = new DoubleAnimation
-            {
-                To = isFocusMode ? 0.3 : 1, // Затемняем фон (до 30%)
-                Duration = TimeSpan.FromSeconds(0.5)
-            };
-
-            // Запускаем анимации
-            blurEffect.BeginAnimation(BlurEffect.RadiusProperty, blurAnimation);
-            MainContent.BeginAnimation(UIElement.OpacityProperty, opacityAnimation);
+			if (enable) Items.Height = new GridLength(0);
+			else Items.Height = new GridLength(50);
         }
-
     }
 }
 

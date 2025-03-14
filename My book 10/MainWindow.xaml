@@ -84,11 +84,8 @@
     <Grid>
         <Border Background="{DynamicResource BackGround}" CornerRadius="15">
             <Grid x:Name="MainContent">
-                <Grid.Effect>
-                    <BlurEffect x:Name="BlurEffect" Radius="0" />
-                </Grid.Effect>
                 <Grid.RowDefinitions>
-                    <RowDefinition x:Name="Items" Height="35"/>
+                    <RowDefinition Height="35"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -126,11 +123,11 @@
                 <Border Background="{DynamicResource OptionalColor}" Grid.Row="1" Margin="5" CornerRadius="15">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition x:Name="Items" Height="50"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
-                            <RichTextBox x:Name="rtbEditor" Panel.ZIndex="3" ContextMenuOpening="rtbEditor_ContextMenuOpening" SelectionChanged="rtbEditor_SelectionChanged">
+                            <RichTextBox x:Name="rtbEditor" ContextMenuOpening="rtbEditor_ContextMenuOpening" SelectionChanged="rtbEditor_SelectionChanged">
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Копировать" Click="CopyText_Click">
