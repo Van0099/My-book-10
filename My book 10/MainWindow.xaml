@@ -127,7 +127,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1" Background="{DynamicResource OptionalBack}" Margin="5" CornerRadius="15">
-                            <RichTextBox x:Name="rtbEditor" ContextMenuOpening="rtbEditor_ContextMenuOpening" SelectionChanged="rtbEditor_SelectionChanged">
+                            <RichTextBox x:Name="rtbEditor" KeyDown="rtbEditor_KeyDown" ContextMenuOpening="rtbEditor_ContextMenuOpening" SelectionChanged="rtbEditor_SelectionChanged">
                                 <RichTextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Копировать" Click="CopyText_Click">
@@ -183,7 +183,7 @@
                                             <ToggleButton Width="40" x:Name="Bold" Checked="BoldToggleButton_Checked" Style="{DynamicResource MaterialDesignFlatButton}" Unchecked="BoldToggleButton_Unchecked">
                                                 <TextBlock Text="B" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource ForeGround}"/>
                                             </ToggleButton>
-                                            <ToggleButton Width="40" x:Name="Underline" Checked="UnderlineToggleButton_Checked" Style="{DynamicResource MaterialDesignFlatButton}" Unchecked="UnderlineToggleButton_Unchecked">
+                                            <ToggleButton Width="42" x:Name="Underline" Checked="UnderlineToggleButton_Checked" Style="{DynamicResource MaterialDesignFlatButton}" Unchecked="UnderlineToggleButton_Unchecked">
                                                 <TextBlock Text="U̲" FontFamily="Segoe UI" FontSize="14" Foreground="{DynamicResource ForeGround}"/>
                                             </ToggleButton>
                                             <ToggleButton Width="40" x:Name="Italic" Checked="ItalicToggleButton_Checked" Style="{DynamicResource MaterialDesignFlatButton}" Unchecked="ItalicToggleButton_Unchecked">
@@ -272,11 +272,11 @@
                         </Border>
                         <Border x:Name="Search" CornerRadius="15" Visibility="Hidden" Background="{DynamicResource OptionalColor}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Grid.Row="1">
                             <StackPanel Orientation="Horizontal" Margin="5">
-                                <TextBox x:Name="SearchBox" Width="200" Margin="3"/>
-                                <Button x:Name="SearchBack" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
+                                <TextBox x:Name="SearchBox" KeyDown="SearchBox_KeyDown" Width="200" Margin="3"/>
+                                <Button x:Name="SearchBack" Click="SearchBack_Click" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
                                     <Image Source="{DynamicResource Search.Back}" Margin="3"/>
                                 </Button>
-                                <Button x:Name="SearchNext" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
+                                <Button x:Name="SearchNext" Click="SearchNext_Click" Width="25" Margin="3" Style="{DynamicResource SearchButton}">
                                     <Image Source="{DynamicResource Search.Next}" Margin="3"/>
                                 </Button>
                             </StackPanel>

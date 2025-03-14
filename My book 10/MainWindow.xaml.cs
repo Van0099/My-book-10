@@ -42,6 +42,8 @@ namespace My_book_10
 		public static bool spellcheck;
 		static bool isFocusMode = false;
 
+        private TextSearcher textSearcher;
+
         public void ShowWithAnimation(FrameworkElement element)
         {
             if (element.Visibility != Visibility.Visible)
@@ -61,6 +63,7 @@ namespace My_book_10
         public MainWindow()
 		{
 			InitializeComponent();
+            textSearcher = new TextSearcher(rtbEditor);
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
 			cmbFontSize.ItemsSource = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
 			{
@@ -170,7 +173,11 @@ namespace My_book_10
 			if (Search.Visibility != Visibility.Visible)
 				Search.Visibility = Visibility.Visible;
 			else
-				Search.Visibility = Visibility.Hidden;
+			{
+                Search.Visibility = Visibility.Hidden;
+                textSearcher.ClearHighlight();
+            }
+
         }
 
         private void FocusMode(object sender, RoutedEventArgs e)
@@ -1256,8 +1263,43 @@ namespace My_book_10
 			if (enable) Items.Height = new GridLength(0);
 			else Items.Height = new GridLength(50);
         }
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string query = SearchBox.Text;
+                bool found = textSearcher.FindNext(query);
+
+                if (!found)
+                    MessageBox.Show("Текст не найден", "Поиск", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void SearchBack_Click(object sender, RoutedEventArgs e)
+        {
+            string query = SearchBox.Text;
+            bool found = textSearcher.FindPrevious(query);
+
+            if (!found)
+                MessageBox.Show("Предыдущих совпадений нет", "Поиск", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void SearchNext_Click(object sender, RoutedEventArgs e)
+        {
+            string query = SearchBox.Text;
+            bool found = textSearcher.FindNext(query);
+
+            if (!found)
+                MessageBox.Show("Совпадений больше нет", "Поиск", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void rtbEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0 && e.Key == Key.F)
+            {
+                Search.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
-
-
-

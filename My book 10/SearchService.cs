@@ -1,115 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Documents;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace My_book_10
+public class TextSearcher
 {
-    internal class SearchService
+    private readonly RichTextBox _richTextBox;
+    private TextRange _lastSelection;
+
+    public TextSearcher(RichTextBox richTextBox)
     {
-        private RichTextBox _rtb;
-        private TextBox _searchBox;
-        private int _lastIndex = -1; // Индекс последнего найденного слова
-        private List<TextRange> _foundRanges = new List<TextRange>(); // Все найденные совпадения
-        private SolidColorBrush highlightBrush = new SolidColorBrush(Colors.Yellow); // Подсветка
+        _richTextBox = richTextBox;
+    }
 
-        public SearchService(RichTextBox rtbEditor, TextBox searchBox)
-        {
-            _rtb = rtbEditor;
-            _searchBox = searchBox;
-        }
+    // Поиск следующего совпадения
+    public bool FindNext(string searchText, bool matchCase = false)
+    {
+        if (string.IsNullOrEmpty(searchText))
+            return false;
 
-        // Очистка выделения перед поиском
-        private void ClearHighlights()
+        // Начинаем поиск с текущего положения или с начала документа
+        TextPointer start = _lastSelection != null ? _lastSelection.End : _richTextBox.Document.ContentStart;
+        TextRange searchRange = new TextRange(start, _richTextBox.Document.ContentEnd);
+
+        string documentText = matchCase ? searchRange.Text : searchRange.Text.ToLower();
+        string searchQuery = matchCase ? searchText : searchText.ToLower();
+
+        int index = documentText.IndexOf(searchQuery);
+        if (index == -1)
+            return false;
+
+        TextPointer startPos = GetTextPositionAtOffset(_richTextBox.Document.ContentStart, index);
+        TextPointer endPos = GetTextPositionAtOffset(startPos, searchText.Length);
+
+        HighlightText(startPos, endPos);
+
+        return true;
+    }
+
+    // Поиск предыдущего совпадения
+    public bool FindPrevious(string searchText, bool matchCase = false)
+    {
+        if (string.IsNullOrEmpty(searchText))
+            return false;
+
+        // Начинаем поиск с текущего положения или с конца документа
+        TextPointer end = _lastSelection != null ? _lastSelection.Start : _richTextBox.Document.ContentEnd;
+        TextRange searchRange = new TextRange(_richTextBox.Document.ContentStart, end);
+
+        string documentText = matchCase ? searchRange.Text : searchRange.Text.ToLower();
+        string searchQuery = matchCase ? searchText : searchText.ToLower();
+
+        int index = documentText.LastIndexOf(searchQuery);
+        if (index == -1)
+            return false;
+
+        TextPointer startPos = GetTextPositionAtOffset(_richTextBox.Document.ContentStart, index);
+        TextPointer endPos = GetTextPositionAtOffset(startPos, searchText.Length);
+
+        HighlightText(startPos, endPos);
+
+        return true;
+    }
+
+    // Подсветка найденного текста
+    private void HighlightText(TextPointer start, TextPointer end)
+    {
+        _lastSelection = new TextRange(start, end);
+        _lastSelection.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Yellow);
+    }
+
+    public void ClearHighlight()
+    {
+        TextRange allText = new TextRange(_richTextBox.Document.ContentStart, _richTextBox.Document.ContentEnd);
+        allText.ClearAllProperties();
+    }
+
+    // Получаем позицию текста на основе смещения
+    private TextPointer GetTextPositionAtOffset(TextPointer start, int offset)
+    {
+        TextPointer current = start;
+        while (offset > 0 && current != null)
         {
-            foreach (var range in _foundRanges)
+            if (current.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
             {
-                range.ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Transparent);
+                int count = current.GetTextRunLength(LogicalDirection.Forward);
+                if (offset <= count)
+                    return current.GetPositionAtOffset(offset);
+
+                offset -= count;
             }
-            _foundRanges.Clear();
+            current = current.GetNextContextPosition(LogicalDirection.Forward);
         }
-
-        // Основной метод поиска
-        public void SearchText()
-        {
-            ClearHighlights();
-            _lastIndex = -1; // Сброс последнего индекса
-
-            if (string.IsNullOrWhiteSpace(_searchBox.Text)) return;
-
-            TextRange docRange = new TextRange(_rtb.Document.ContentStart, _rtb.Document.ContentEnd);
-            string text = docRange.Text;
-            string searchText = _searchBox.Text;
-
-            int startIndex = 0;
-            while ((startIndex = text.IndexOf(searchText, startIndex, StringComparison.OrdinalIgnoreCase)) != -1)
-            {
-                TextPointer start = GetTextPointerAtOffset(_rtb.Document.ContentStart, startIndex);
-                TextPointer end = GetTextPointerAtOffset(start, searchText.Length);
-                TextRange range = new TextRange(start, end);
-
-                range.ApplyPropertyValue(TextElement.BackgroundProperty, highlightBrush);
-                _foundRanges.Add(range);
-
-                startIndex += searchText.Length;
-            }
-        }
-
-        // Метод поиска вперед
-        public void SearchNext()
-        {
-            if (_foundRanges.Count == 0) return;
-
-            _lastIndex++;
-            if (_lastIndex >= _foundRanges.Count) _lastIndex = 0;
-
-            HighlightCurrent();
-        }
-
-        // Метод поиска назад
-        public void SearchBack()
-        {
-            if (_foundRanges.Count == 0) return;
-
-            _lastIndex--;
-            if (_lastIndex < 0) _lastIndex = _foundRanges.Count - 1;
-
-            HighlightCurrent();
-        }
-
-        // Подсветка текущего найденного элемента
-        private void HighlightCurrent()
-        {
-            foreach (var range in _foundRanges)
-            {
-                range.ApplyPropertyValue(TextElement.BackgroundProperty, highlightBrush);
-            }
-
-            _foundRanges[_lastIndex].ApplyPropertyValue(TextElement.BackgroundProperty, Brushes.Orange);
-            _rtb.Selection.Select(_foundRanges[_lastIndex].Start, _foundRanges[_lastIndex].End);
-            _rtb.Focus();
-        }
-
-        // Получение TextPointer по индексу символа
-        private TextPointer GetTextPointerAtOffset(TextPointer start, int offset)
-        {
-            TextPointer pointer = start;
-            while (offset > 0 && pointer != null)
-            {
-                if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                {
-                    int count = pointer.GetTextRunLength(LogicalDirection.Forward);
-                    if (offset <= count)
-                        return pointer.GetPositionAtOffset(offset);
-                    offset -= count;
-                }
-                pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
-            }
-            return pointer;
-        }
+        return current;
     }
 }
