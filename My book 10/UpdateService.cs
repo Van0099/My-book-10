@@ -5,15 +5,13 @@ using System.IO;
 using Newtonsoft.Json;
 using System.IO.Compression;
 using System.Diagnostics;
-using System.IO.Packaging;
-
+using System.Windows;
 
 public class UpdateService
 {
     private const string VersionInfoUrl = "https://raw.githubusercontent.com/Van0099/My-book-10/master/versioninfo.json";
     private const string CurrentVersionFile = "versioninfo.json";
-    private const string DownloadUrl = "https://github.com/Van0099/My-book-10/releases/latest/download/My_book10_update.zip";
-    private const string UpdateFilePath = "update.zip";
+    private const string UpdateFilePath = "My_book10_update.zip";
 
     public static async Task<bool> IsUpdateAvailableAsync()
     {
@@ -22,12 +20,12 @@ public class UpdateService
             using (HttpClient client = new HttpClient())
             {
                 string remoteJson = await client.GetStringAsync(VersionInfoUrl);
-                var remoteVersion = JsonConvert.DeserializeObject<VersionInfo>(remoteJson);
+                var remoteVersion = JsonConvert.DeserializeObject<VersionInfous>(remoteJson);
 
                 if (remoteVersion == null)
                     return false;
 
-                var localVersion = await VersionInfo_.LoadFromFileAsync(CurrentVersionFile);
+                var localVersion = await VersionInfous.LoadFromFileAsync(CurrentVersionFile);
 
                 if (localVersion == null)
                     return true;
@@ -45,39 +43,42 @@ public class UpdateService
 
     public static async Task DownloadAndInstallUpdateAsync()
     {
+        MessageBox.Show("ok");
         try
         {
+            MessageBox.Show("ok2");
             using (HttpClient client = new HttpClient())
             {
-                byte[] data = await client.GetByteArrayAsync(DownloadUrl);
+                string remoteJson = await client.GetStringAsync(VersionInfoUrl);
+                var remoteVersion = JsonConvert.DeserializeObject<VersionInfous>(remoteJson);
+                byte[] data = await client.GetByteArrayAsync(remoteVersion.DownloadURL);
                 await Task.Run(() => File.WriteAllBytes(UpdateFilePath, data));
+                MessageBox.Show("процесс идёт");
             }
 
             string extractPath = AppDomain.CurrentDomain.BaseDirectory;
-            if (Directory.Exists(extractPath))
-            {
-                Directory.Delete(extractPath, true);
-            }
+            string updaterPath = Path.Combine(extractPath, "Updater.exe");
 
-            if (Directory.Exists(extractPath))
-            {
-                Directory.Delete(extractPath, true); // Удаляем старые файлы перед распаковкой
-            }
+            // Сохранение текущего процесса
+            string currentExe = Process.GetCurrentProcess().MainModule.FileName;
 
-            ZipFile.ExtractToDirectory(UpdateFilePath, extractPath);
-            File.Delete(UpdateFilePath);
-            
+            // Создаём Updater.exe (если его нет)
+            File.WriteAllBytes(updaterPath, Properties.Resources.Updater); // Updater должен быть в ресурсах проекта
+
+            // Запускаем Updater.exe и передаём путь к текущему .exe
             Process.Start(new ProcessStartInfo
             {
-                FileName = "MyBook.exe",
+                FileName = updaterPath,
+                Arguments = $"\"{currentExe}\" \"{UpdateFilePath}\" \"{extractPath}\"",
                 UseShellExecute = true
             });
 
+            // Завершаем текущее приложение
             Environment.Exit(0);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Ошибка при установке обновления: " + ex.Message);
+            MessageBox.Show("Ошибка при установке обновления: " + ex.Message);
         }
     }
 
@@ -88,7 +89,6 @@ public class UpdateService
         if (isUpdateAvailable)
         {
             Console.WriteLine("Доступно новое обновление!");
-            // Здесь можно добавить логику для загрузки и установки обновления
         }
         else
         {
@@ -117,7 +117,7 @@ public class UpdateService
                 if (remoteVersion == null)
                     return null;
 
-                var localVersion = await VersionInfo_.LoadFromFileAsync(CurrentVersionFile);
+                var localVersion = await VersionInfous.LoadFromFileAsync(CurrentVersionFile);
 
                 return new UpdateInfo
                 {
@@ -134,12 +134,11 @@ public class UpdateService
             return null;
         }
     }
-
 }
 
-public class VersionInfo_
+public class VersionInfous
 {
-    public string PublicVersion { get; set; }
+    public string DownloadURL { get; set; }
     public string VersionType { get; set; }
     public string VersionID { get; set; }
 
@@ -148,7 +147,7 @@ public class VersionInfo_
         if (!File.Exists(filePath))
             return null;
 
-        string json = File.ReadAllText(filePath);
+        string json = await Task.Run(() => File.ReadAllText(filePath));
         return JsonConvert.DeserializeObject<VersionInfo>(json);
     }
 }

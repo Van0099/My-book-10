@@ -473,7 +473,7 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Expander>
-                            <Button x:Name="InstallUpdate" Visibility="Collapsed" Style="{StaticResource CornerButton}" Background="#FFECB930" Margin="5">
+                            <Button x:Name="InstallUpdate" Visibility="Collapsed" Click="InstallUpdate_Click" Style="{StaticResource CornerButton}" Background="#FFECB930" Margin="5">
                                 <TextBlock Text="Установить обновления" Margin="5"/>
                             </Button>
                         </StackPanel>

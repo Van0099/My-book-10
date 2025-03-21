@@ -1225,6 +1225,7 @@ namespace My_book_10
                 UpdateTable.ItemsSource = updateRows;
 				UpdateMessage.Visibility = Visibility.Visible;
 				if (updateavialble) InstallUpdate.Visibility = Visibility.Visible;
+                InstallUpdate.Visibility = Visibility.Visible;
 
                 Storyboard storyboard = (Storyboard)UpdateMessage.Resources["BorderAnimation"];
                 storyboard.Begin();
@@ -1300,6 +1301,12 @@ namespace My_book_10
             {
                 Search.Visibility = Visibility.Visible;
             }
+        }
+
+        private async void InstallUpdate_Click(object sender, RoutedEventArgs e)
+        {
+			MessageBox.Show("yes, sir!");
+            await UpdateService.DownloadAndInstallUpdateAsync();
         }
     }
 }
