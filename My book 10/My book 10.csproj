@@ -148,6 +148,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SaveIndicator.xaml.cs">
+      <DependentUpon>SaveIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchService.cs" />
     <Compile Include="UpdateService.cs" />
     <Compile Include="VersionInfo_.cs" />
@@ -213,6 +216,10 @@
     <Page Include="Resources\Themes\light.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SaveIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ThemeEditor.xaml">
       <SubType>Designer</SubType>
@@ -325,6 +332,10 @@
     <Resource Include="Resources\icons\replace_dark.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\icons\saved.png" />
+    <Resource Include="Resources\icons\saved_dark.png" />
+    <Resource Include="Resources\icons\saving.png" />
+    <Resource Include="Resources\icons\saving_dark.png" />
     <Content Include="updater\MybookUpdater.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

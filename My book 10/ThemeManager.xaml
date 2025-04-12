@@ -26,7 +26,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Border Background="{DynamicResource OptionalColor}" CornerRadius="15" HorizontalAlignment="Right" Margin="0,0,5,0">
-                        <Button x:Name="Close" Content="✕" Width="30" Style="{DynamicResource ButtonFlat}"/>
+                        <Button x:Name="Close" Click="Close_Click" Content="✕" Width="35" Style="{DynamicResource ButtonFlat}"/>
                     </Border>
                     <TextBlock Text="{DynamicResource tm}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>

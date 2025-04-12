@@ -45,4 +45,7 @@
     <v:String x:Key="us.info">Info</v:String>
     <v:String x:Key="us.remote">Remote</v:String>
     <v:String x:Key="us.local">Local</v:String>
+    <v:String x:Key="si.readytosave">Save</v:String>
+    <v:String x:Key="si.saving">Saving</v:String>
+    <v:String x:Key="si.saved">Saved</v:String>
 </ResourceDictionary>

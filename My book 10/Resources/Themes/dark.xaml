@@ -21,6 +21,9 @@
 
     <BitmapImage x:Key="ThemeManager" UriSource="/Resources/icons/themefolder_dark.png" />
 
+    <BitmapImage x:Key="Saved" UriSource="/Resources/icons/saved_dark.png" />
+    <BitmapImage x:Key="si.Saving" UriSource="/Resources/icons/saving_dark.png" />
+
     <BitmapImage x:Key="List.Insert" UriSource="/Resources/icons/newlist_dark.png" />
 
     <SolidColorBrush x:Key="BackGround" Color="#FF252525"/>

@@ -45,4 +45,7 @@
     <v:String x:Key="us.info">Доп. инфо</v:String>
     <v:String x:Key="us.remote">Удалённый</v:String>
     <v:String x:Key="us.local">Локальный</v:String>
+    <v:String x:Key="si.readytosave">Сохранить</v:String>
+    <v:String x:Key="si.saving">Сохранение</v:String>
+    <v:String x:Key="si.saved">Сохранено</v:String>
 </ResourceDictionary>

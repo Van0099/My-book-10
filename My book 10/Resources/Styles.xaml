@@ -163,4 +163,29 @@
         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
                          From="0.9" To="1" Duration="0:0:0.3"/>
     </Storyboard>
+    <Style TargetType="ContextMenu">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="HasDropShadow" Value="True"/>
+        <Setter Property="Background" Value="{DynamicResource OptionalBack2}" />
+        <Setter Property="BorderBrush" Value="#40FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="8"
+                    SnapsToDevicePixels="True">
+                        <StackPanel
+                        IsItemsHost="True"
+                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                        Background="Transparent"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

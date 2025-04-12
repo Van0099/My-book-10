@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.IO.Compression;
 using System.Diagnostics;
 using System.Windows;
+using System.Reflection;
 
 public class UpdateService
 {
@@ -57,21 +58,41 @@ public class UpdateService
             }
 
             string extractPath = AppDomain.CurrentDomain.BaseDirectory;
-            string updaterPath = Path.Combine(extractPath, "Updater.exe");
+            string updaterPath = Path.Combine(extractPath, "updater", "MybookUpdater");
 
             // Сохранение текущего процесса
             string currentExe = Process.GetCurrentProcess().MainModule.FileName;
 
-            // Создаём Updater.exe (если его нет)
-            File.WriteAllBytes(updaterPath, Properties.Resources.Updater); // Updater должен быть в ресурсах проекта
+            string appDataPath = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    "mybook");
+
+            string updaterSourceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "updater");
+            string appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mybook");
+            string updaterTargetDir = Path.Combine(appDataDir, "Updater");
+
+            // Проверяем и копируем, если не существует
+            if (!Directory.Exists(updaterTargetDir))
+                Directory.CreateDirectory(updaterTargetDir);
+
+            foreach (string file in Directory.GetFiles(updaterSourceDir))
+            {
+                string fileName = Path.GetFileName(file);
+                string destFile = Path.Combine(updaterTargetDir, fileName);
+                File.Copy(file, destFile, true);
+            }
+
+            MessageBox.Show(UpdateFilePath);
+
+            string updaterExe = Path.Combine(updaterTargetDir, "MyBookUpdater.exe");
 
             // Запускаем Updater.exe и передаём путь к текущему .exe
             Process.Start(new ProcessStartInfo
-            {
-                FileName = updaterPath,
-                Arguments = $"\"{currentExe}\" \"{UpdateFilePath}\" \"{extractPath}\"",
-                UseShellExecute = true
-            });
+        {
+            FileName = updaterExe,
+            Arguments = $"\"{AppDomain.CurrentDomain.BaseDirectory}\" \"{UpdateFilePath}\"",
+            UseShellExecute = true
+        });
 
             // Завершаем текущее приложение
             Environment.Exit(0);

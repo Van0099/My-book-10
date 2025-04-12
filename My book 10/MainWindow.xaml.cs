@@ -15,6 +15,7 @@ using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using static UpdateService;
 using System.Windows.Media.Effects;
+using System.Security.Policy;
 
 
 namespace My_book_10
@@ -63,6 +64,7 @@ namespace My_book_10
         public MainWindow()
 		{
 			InitializeComponent();
+			CheckUpdateAvialble();
             textSearcher = new TextSearcher(rtbEditor);
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
 			cmbFontSize.ItemsSource = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
@@ -131,6 +133,13 @@ namespace My_book_10
             }
 		}
 
+		private async void CheckUpdateAvialble()
+		{
+            UpdateInfo updateInfo = await UpdateService.GetUpdateInfoAsync();
+            if (updateInfo.IsUpdateAvailable) menuAvialbleText.Visibility = Visibility.Visible;
+            else menuAvialbleText.Visibility = Visibility.Collapsed;
+        }
+
 		private void VersionRead()
 		{
             VersionInfoReader reader = new VersionInfoReader();
@@ -195,7 +204,10 @@ namespace My_book_10
         private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (cmbFontFamily.SelectedItem != null)
-				rtbEditor.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
+			{
+                rtbEditor.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
+                cmbFontFamily.FontFamily = (FontFamily)cmbFontFamily.SelectedItem;
+            }
 		}
 
 		private void cmbFontSize_TextChanged(object sender, TextChangedEventArgs e)
@@ -222,7 +234,7 @@ namespace My_book_10
 
 		private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			this.DragMove();
+			try { this.DragMove(); } catch { }
 		}
 
 		private void Open_Click(object sender, RoutedEventArgs e)
@@ -253,6 +265,7 @@ namespace My_book_10
 
 						// Обновляем список недавно открытых файлов
 						UpdateRecentFilesList();
+						SaveIndicator.SetState(SaveIndicator.SaveState.Saved);
 					}
 				}
 				catch
@@ -467,7 +480,8 @@ namespace My_book_10
 
 					// Устанавливаем цвет текста
 					range.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(color));
-				}
+                    tcText.Foreground = new SolidColorBrush(color);
+                }
 			}
 		}
 
@@ -1111,6 +1125,7 @@ namespace My_book_10
                     cmbFontSize.Text = fontSize.ToString();
                 }
             }
+			SaveIndicator.SetState(SaveIndicator.SaveState.ReadyToSave);
         }
 
         private void ToggleList(bool isNumbered)
@@ -1307,6 +1322,70 @@ namespace My_book_10
         {
 			MessageBox.Show("yes, sir!");
             await UpdateService.DownloadAndInstallUpdateAsync();
+        }
+
+        private void SaveIndicator_OnSaveRequested()
+        {
+            if (filename != null)
+            {
+                using (FileStream fileStream = new FileStream(filename, FileMode.Open))
+                {
+                    TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
+                    string extension = System.IO.Path.GetExtension(filename).ToLower();
+
+                    if (extension == ".rtf")
+                    {
+                        range.Save(fileStream, DataFormats.Rtf);
+                    }
+                    else if (extension == ".txt")
+                    {
+                        range.Save(fileStream, DataFormats.Text);
+                    }
+                    SaveIndicator.NotifySaved();
+                }
+            }
+            else
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Filter = "Rich Text Format (*.rtf)|*.rtf|Portable Document Format (*.pdf)|*.pdf|Text File (*.txt)|*.txt|All files (*.*)|*.*";
+                if (dlg.ShowDialog() == true)
+                {
+                    string extension = System.IO.Path.GetExtension(dlg.FileName).ToLower();
+                    FileStream fileStream = new FileStream(dlg.FileName, FileMode.Create);
+                    TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
+                    if (extension == ".rtf")
+                    {
+                        range.Save(fileStream, DataFormats.Rtf);
+                        filename = dlg.FileName;
+                    }
+                    else if (extension == ".txt")
+                    {
+                        range.Save(fileStream, DataFormats.Text);
+                        filename = dlg.FileName;
+                    }
+                    else if (extension == ".pdf")
+                    {
+                        PdfDocument document = new PdfDocument();
+                        document.Info.Title = "Экспортированный документ";
+
+                        PdfPage page = document.AddPage();
+                        XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                        // Пример: выводим текст из RichTextBox в PDF
+                        string text = range.Text;
+
+                        XFont font = new XFont("Verdana", 12);
+                        gfx.DrawString(text, font, XBrushes.Black, new XRect(40, 40, page.Width - 80, page.Height - 80), XStringFormats.TopLeft);
+
+                        document.Save(fileStream);
+                    }
+                    SaveIndicator.NotifySaved();
+                }
+				else if (dlg.ShowDialog() == false)
+				{
+                    SaveIndicator.SetState(SaveIndicator.SaveState.ReadyToSave);
+                }
+            }
         }
     }
 }

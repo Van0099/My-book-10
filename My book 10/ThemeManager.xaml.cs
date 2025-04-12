@@ -141,6 +141,11 @@ namespace My_book_10
             this.DragMove();
         }
 
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Storyboard openAnimation = (Storyboard)FindResource("OpenWindowAnimation");

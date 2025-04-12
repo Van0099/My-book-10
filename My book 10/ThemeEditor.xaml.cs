@@ -81,6 +81,11 @@ namespace My_book_10
                         <BitmapImage x:Key=""Table.Insert"" UriSource=""pack://application:,,,/Resources/icons/inserttable{iconSuffix}.png"" />
                         <BitmapImage x:Key=""Table.Remove"" UriSource=""pack://application:,,,/Resources/icons/removetable{iconSuffix}.png"" />
 
+                        <BitmapImage x:Key=""ThemeManager"" UriSource=""pack://application:,,,/Resources/icons/themefolder{iconSuffix}.png"" />
+
+                        <BitmapImage x:Key=""si.Saved"" UriSource=""pack://application:,,,/Resources/icons/saved{iconSuffix}.png"" />
+                        <BitmapImage x:Key=""si.Saving"" UriSource=""pack://application:,,,/Resources/icons/saving{iconSuffix}.png"" />
+
                         <BitmapImage x:Key=""List.Insert"" UriSource=""pack://application:,,,/Resources/icons/newlist{iconSuffix}.png"" />
 
                         <SolidColorBrush x:Key=""BackGround"" Color=""{sBackGround.HEXColor}""/>
